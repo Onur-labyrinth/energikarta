@@ -329,6 +329,19 @@ footer.src ul{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:
 .backbtn{appearance:none;align-self:flex-start;border:1px solid var(--line);background:var(--soft);color:var(--ink);border-radius:999px;padding:6px 14px 6px 11px;font:600 14.5px var(--body);cursor:pointer;display:inline-flex;align-items:center;gap:6px}
 .backbtn:hover{border-color:var(--ink2)}
 .chip.se{font-family:var(--mono);font-size:14px}
+/* search, excel, check dates */
+.xbtn{appearance:none;display:inline-flex;align-items:center;gap:7px;border:1px solid var(--gold);background:var(--gold-soft);color:var(--bronze);border-radius:8px;padding:9px 14px;font:700 14.5px var(--body);cursor:pointer;white-space:nowrap}
+.xbtn:hover{background:var(--gold);color:#fff}
+.chk{font-size:12.5px;color:var(--muted)}
+td .sub.chk{font-size:12px;opacity:.85}
+#gq{font-size:17px;padding:12px 14px}
+#gres{display:flex;flex-direction:column;gap:14px;max-height:62vh;overflow:auto}
+.gs-grp{display:flex;flex-direction:column;gap:2px}
+.gs-grp .eyebrow{margin-bottom:6px}.gs-grp .c{color:var(--muted)}
+.gs-hit{appearance:none;border:0;background:none;text-align:left;padding:8px 10px;border-radius:8px;cursor:pointer;display:flex;flex-direction:column;gap:1px;font:inherit;color:inherit}
+.gs-hit:hover,.gs-hit:focus-visible{background:var(--soft)}
+.gs-hit b{font-size:15.5px}.gs-hit span{font-size:13.5px;color:var(--muted)}
+@media (max-width:700px){#searchBtn span,#dataBtn span{display:none}}
 /* data editor */
 .dbdlg{position:fixed;inset:0;z-index:60;background:rgba(34,28,21,.55);display:flex;align-items:flex-start;justify-content:center;padding:40px 16px;overflow:auto}
 .dbbox{background:var(--surface);border-radius:14px;max-width:760px;width:100%;padding:20px;display:flex;flex-direction:column;gap:10px;box-shadow:0 20px 60px rgba(0,0,0,.3)}
@@ -447,6 +460,7 @@ footer.src ul{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:
     <button class="mtab" role="tab" data-v="karn" aria-selected="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="1.6" fill="currentColor"/><ellipse cx="12" cy="12" rx="10" ry="4"/><ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(120 12 12)"/></svg><span class="lf">Kärnkraft</span><span class="ls">Kärnkraft</span></button>
     <button class="mtab" role="tab" data-v="drift" aria-selected="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 11v11M9 22h6"/><path d="M12 10 11 2.5c1.6 0 2.4 1.2 2 3L12 10z"/><path d="M12.9 10.6l6.8 3.4c-.8 1.4-2.2 1.5-3.6.5L12.9 10.6z"/><path d="M11.1 10.6l-6.8 3.4c.8 1.4 2.2 1.5 3.6.5l3.2-3.9z"/><circle cx="12" cy="10.5" r="1.2"/></svg><span class="lf">I drift &amp; avvecklat</span><span class="ls">I drift</span></button>
   </nav>
+  <button class="guidebtn" type="button" id="searchBtn" aria-label="Sök i hela Energikartan"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span>Sök</span></button>
   <button class="guidebtn" type="button" id="dataBtn" hidden aria-label="Redigera data"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v14c0 1.7 3.6 3 8 3s8-1.3 8-3V5M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/></svg><span>Data</span></button>
   <button class="guidebtn" type="button" id="guideBtn" aria-label="Starta introduktionsguiden"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 2.5-3 4.5"/><circle cx="12" cy="17.5" r=".6" fill="currentColor"/></svg><span>Guide</span></button>
 </div></div>
@@ -502,7 +516,7 @@ footer.src ul{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:
         <p>Megawatt i Svenska kraftnäts anslutningskö jämfört med planerad ny produktion och den kärnkraft som når 60 års drift. Posterna kan överlappa och ska inte summeras mellan staplarna.</p></div>
       <div class="twocol">
         <div class="facts"><h3>Efterfrågan: ansökt effektanvändning i kön</h3><div class="hbars" id="big-dem"></div></div>
-        <div class="facts"><h3>Utbud: ny och befintlig effekt</h3><div class="hbars" id="big-sup"></div></div>
+        <div class="facts"><h3>Utbud: ny och befintlig effekt</h3><div class="hbars" id="big-sup" data-share="no"></div></div>
       </div>
       <details class="grp srcd" style="margin-top:14px"><summary><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 19.5V5a2 2 0 0 1 2-2h14v16H6a2 2 0 0 0-2 2z"/><path d="M8 7h8M8 11h6"/></svg>Källor till tidslinjen<span class="c">11 länkar</span></summary><div class="srcin"><ul class="links">
         <li><a href="https://www.scb.se/hitta-statistik/statistik-efter-amne/energi/tillforsel-och-anvandning-av-energi/arlig-energistatistik-el-gas-och-fjarrvarme/pong/tabell-och-diagram/tillforsel-och-anvandning-av-el-20012024-gwh/" target="_blank" rel="noopener">SCB – Tillförsel och användning av el 2001–2024</a></li>
@@ -595,7 +609,7 @@ footer.src ul{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:
   <section id="lista">
     <div class="sec-head"><div class="eyebrow">Kontaktlistan</div><h2>Alla projekt, sökbara</h2>
       <p>Listan är uppdelad per kraftslag. Öppna en grupp, eller sök – grupper med träffar öppnas automatiskt.</p></div>
-    <div class="listbar"><input type="search" id="q" placeholder="Sök t.ex. Vattenfall, Lycksele, Kattegatt …" aria-label="Sök i projektlistan"><select id="qs" aria-label="Filtrera listan på status"></select></div>
+    <div class="listbar"><input type="search" id="q" placeholder="Sök t.ex. Vattenfall, Lycksele, Kattegatt …" aria-label="Sök i projektlistan"><select id="qs" aria-label="Filtrera listan på status"></select><button class="xbtn" type="button" data-xlsx="svv"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m0 0-4-4m4 4 4-4M4 19h16"/></svg>Ladda ner Excel</button></div>
     <div id="groups"></div>
     <div class="count" id="count"></div>
   </section>
@@ -693,7 +707,7 @@ footer.src ul{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:
     <div class="sec-head"><div class="eyebrow">Företag &amp; projekt</div><h2>Vilka står bakom efterfrågan?</h2>
       <p>Företag med planerade, pågående eller befintliga anläggningar som kräver stora elanslutningar, samt nätägare och myndigheter i anslutningsprocessen. Svenska kraftnät publicerar inte vilka företag som står i kön – uppgifterna kommer från företagens och kommunernas egna meddelanden samt nyhetsmedier.</p></div>
     <div class="chips" id="catChips" style="margin-bottom:10px"></div>
-    <div class="listbar" id="n-listbar"><input id="nq" type="search" placeholder="Sök företag, ort eller län…" aria-label="Sök bland företag"><select id="n-stat" aria-label="Filtrera på status"></select><select id="n-sort" aria-label="Sortera företag"></select></div>
+    <div class="listbar" id="n-listbar"><input id="nq" type="search" placeholder="Sök företag, ort eller län…" aria-label="Sök bland företag"><select id="n-stat" aria-label="Filtrera på status"></select><select id="n-sort" aria-label="Sortera företag"></select><button class="xbtn" type="button" data-xlsx="co"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m0 0-4-4m4 4 4-4M4 19h16"/></svg>Ladda ner Excel</button></div>
     <p class="count" id="ncount" style="margin:0 0 10px"></p>
     <div id="coGrid"></div>
   </section>
@@ -772,7 +786,8 @@ footer.src ul{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:
   </section>
 
   <section>
-    <div class="sec-head"><div class="eyebrow">Alla anläggningar</div><h2>Anläggningar och projekt</h2></div>
+    <div class="sec-head"><div class="eyebrow">Alla anläggningar</div><h2>Anläggningar och projekt</h2><p>Excel-filen följer filtret på kartan ovan.</p></div>
+    <div class="listbar"><button class="xbtn" type="button" data-xlsx="kq"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m0 0-4-4m4 4 4-4M4 19h16"/></svg>Ladda ner Excel</button></div>
     <div id="k-groups"></div>
   </section>
 
@@ -836,7 +851,7 @@ footer.src ul{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:
   <section>
     <div class="sec-head"><div class="eyebrow">Alla anläggningar</div><h2>Sök bland anläggningarna</h2>
       <p>Listan är uppdelad per kraftslag. Öppna en grupp eller sök – grupper med träffar öppnas automatiskt.</p></div>
-    <div class="listbar"><input type="search" id="dq" placeholder="Sök t.ex. Markbygden, Vattenfall, Piteå …" aria-label="Sök bland anläggningar"><select id="d-lan" aria-label="Filtrera på län"></select><select id="d-sort" aria-label="Sortera"></select></div>
+    <div class="listbar"><input type="search" id="dq" placeholder="Sök t.ex. Markbygden, Vattenfall, Piteå …" aria-label="Sök bland anläggningar"><select id="d-lan" aria-label="Filtrera på län"></select><select id="d-sort" aria-label="Sortera"></select><button class="xbtn" type="button" data-xlsx="dq"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m0 0-4-4m4 4 4-4M4 19h16"/></svg>Ladda ner Excel</button></div>
     <div id="d-groups"></div>
     <div class="count" id="d-count"></div>
   </section>
@@ -861,6 +876,7 @@ footer.src ul{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:
   </div>
 </div>
 
+<div class="dbdlg" id="searchDlg" hidden role="dialog" aria-modal="true" aria-label="Sök i Energikartan"><div class="dbbox"><div class="dbhead"><h2>Sök i hela Energikartan</h2><button class="tbtn" type="button" id="searchClose">Stäng</button></div><input type="search" id="gq" placeholder="T.ex. Vattenfall, Piteå, Blykalla, batteri …" aria-label="Sökord"><div id="gres"></div></div></div>
 <div class="dbdlg" id="dataDlg" hidden role="dialog" aria-modal="true" aria-label="Redigera data"><div class="dbbox"><div class="dbhead"><h2>Redigera data</h2><button class="tbtn" type="button" id="dataClose">Stäng</button></div><p class="hint">Ändringar sparas i sidans delade databas och syns för alla som öppnar länken. Den nedladdade filen visar alltid den version som fanns när den sparades.</p><div id="dataBody"></div></div></div>
 <div class="tt" id="tt" hidden></div>
 
@@ -897,6 +913,9 @@ const fmt=n=>(Math.round(n*10)/10).toLocaleString('sv-SE').replace(/ /g,' ');
 const mwf=n=>n==null?'–':n.toLocaleString('sv-SE').replace(/ /g,' ')+' MW';
 const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const NS='http://www.w3.org/2000/svg';
+const CHK_DATE='1 okt 2026';
+const chkSvv=p=>{const s=String(p.src||'')+' '+(p.n||'');if(/allabolag|Munkhyttan/.test(s))return 'Kunde inte kontrolleras – källan går inte att hämta automatiskt';if(/vbk\.lansstyrelsen/.test(p.src||''))return 'Enligt Vindbrukskollens export, sept 2026';return CHK_DATE};
+const chkRow=t=>`<dt>Senast kontrollerad</dt><dd>${esc(t)}</dd>`;
 const LANN=['Gävleborg','Jönköping','Kalmar','Dalarna','Kronoberg','Örebro','Östergötland','Södermanland','Västmanland','Halland','Värmland','Jämtland','Norrbotten','Västernorrland','Västerbotten','Gotland','Stockholm','Uppsala','Blekinge','Västra Götaland','Skåne'];
 const lk=s=>{if(!s)return null;let t=String(s).replace(/ län$/,'');if(!LANN.includes(t)&&t.endsWith('s'))t=t.slice(0,-1);return LANN.includes(t)?t:null};
 const L0=11*Math.PI/180;
@@ -976,8 +995,14 @@ function gantt(box,o,rows){
     const lab=`<b>${esc(r.l)}</b><span>${esc(r.s||'')}</span>${r.k!=null&&o.onclick?`<em class="g-go">${o.goTxt||'Visa i fliken'} →</em>`:''}`;
     const L=r.k!=null&&o.onclick?`<button type="button" class="g-lab g-btn" data-k="${esc(r.k)}">${lab}</button>`:`<div class="g-lab">${lab}</div>`;
     const T=r.src?`<a class="g-track g-link" href="${esc(r.src)}" target="_blank" rel="noopener" style="height:${H}px" title="Öppna källan: ${esc(r.srcT||r.src)}">${grid}${b}<span class="g-src">Källa ↗</span></a>`:`<div class="g-track" style="height:${H}px">${grid}${b}</div>`;
-    return `<div class="g-row">${L}${T}</div>`}).join('');
+    return `<div class="g-row" data-gi="${rows.indexOf(r)}">${L}${T}</div>`}).join('');
   box.innerHTML=h;
+  const fy=o.fmt||(v=>{const y=Math.floor(v+1e-6),m=Math.round((v-y)*12);return m?`${['jan','feb','mar','apr','maj','jun','jul','aug','sep','okt','nov','dec'][m]} ${y}`:String(y)});
+  const tip=r=>{const per=r.per||(r.a!=null&&r.b!=null?`${fy(r.a)} – ${fy(r.b)}${r.b2!=null?` (ev. till ${fy(r.b2)})`:''}`:r.dot!=null?fy(r.dot):(r.b!=null?`${fy(r.b)}${r.b2!=null?` – ${fy(r.b2)}`:''}`:''));
+    return `<b>${esc(r.l)}</b>${r.s?esc(r.s)+'<br>':''}${per?`<span style="opacity:.8">${o.fmt?'Tid':'Period'}:</span> ${per}<br>`:''}${r.mwl?`<span style="opacity:.8">Effekt:</span> ${esc(r.mwl)}<br>`:''}${r.b2!=null?'<span style="opacity:.8">Ljusare del = osäkert spann</span><br>':''}${r.hatch?'<span style="opacity:.8">Randig stapel = försenat / upphör</span><br>':''}${r.src?'<i>Tryck på stapeln för att öppna källan</i>':''}`};
+  box.onpointermove=e=>{const t=e.target.closest('.g-track');if(!t){hideTT();return}const r=rows[+t.closest('.g-row').dataset.gi];if(r&&!r.hdr)showTT(tip(r),e.clientX,e.clientY)};
+  box.onpointerleave=hideTT;
+  box.addEventListener('focusin',e=>{const t=e.target.closest('.g-track');if(!t)return;const r=rows[+t.closest('.g-row').dataset.gi];const b=t.getBoundingClientRect();if(r)showTT(tip(r),b.left+b.width/2,b.top)});box.addEventListener('focusout',hideTT);
   if(o.onclick)box.onclick=e=>{const r=e.target.closest('.g-btn');if(r)o.onclick(r.dataset.k)};
 }
 const GEXPL='<span class="g-expl"><b>Så läser du tidslinjen:</b> Mörk stapel = datum som bolaget eller myndigheten anger. Ljusare förlängning = osäkert spann, t.ex. "mitten av 2030-talet" eller "inom 10–15 år". Punkt = bara ett årtal angivet. Tjockare stapel = större effekt (MW). Streckad linje = i dag. Tryck på stapeln för att öppna källan och på namnet för att visa projektet.</span>';
@@ -1068,7 +1093,7 @@ function apply(fromBack){if(!fromBack)HS.rec();
 }
 function panel(){const E=$('#panel');
   if(st.sel!==null){const p=P[st.sel];
-    E.innerHTML=`<div class="eyebrow">${TYPES[p.t]}</div><h3>${esc(p.n)}</h3>${badge(p.s)}<dl><dt>Bolag</dt><dd>${esc(p.b)}</dd><dt>Plats</dt><dd>${esc(p.k)}${p.off?' <span class="hint">(ungefärligt läge)</span>':''}</dd>${size2(p)?`<dt>Storlek</dt><dd>${esc(size2(p))}</dd>`:''}${p.bs?`<dt>Planerad byggstart</dt><dd class="num">${p.bs}</dd>`:''}${p.dt?`<dt>Planerad drift</dt><dd class="num">${p.dt}</dd>`:''}${p.date?`<dt>Beslut</dt><dd class="num">${esc(p.date)}</dd>`:''}${p.why||p.desc?`<dt>Läge</dt><dd>${esc(p.why||p.desc)}</dd>`:''}</dl><div style="display:flex;gap:16px;flex-wrap:wrap">${p.w?`<a href="${esc(p.w)}" target="_blank" rel="noopener">${p.t==='karn'?'Källa 1':'Projektsida'} ↗</a>`:''}${p.src&&p.src!==p.w?`<a href="${esc(p.src)}" target="_blank" rel="noopener">${p.t==='karn'?'Källa 2':'Källa'} ↗</a>`:''}${p.t==='karn'?`<button class="linkbtn" type="button" id="tok">Mer under fliken Kärnkraft</button>`:''}</div>${st.d!==p.d&&devs[p.d].length>1?`<button class="linkbtn" type="button" id="sd">Visa alla ${devs[p.d].length} projekt från ${esc(p.d)}</button>`:''}<button class="linkbtn" type="button" id="cl" style="color:var(--muted)">Stäng</button>`;
+    E.innerHTML=`<div class="eyebrow">${TYPES[p.t]}</div><h3>${esc(p.n)}</h3>${badge(p.s)}<dl><dt>Bolag</dt><dd>${esc(p.b)}</dd><dt>Plats</dt><dd>${esc(p.k)}${p.off?' <span class="hint">(ungefärligt läge)</span>':''}</dd>${size2(p)?`<dt>Storlek</dt><dd>${esc(size2(p))}</dd>`:''}${p.bs?`<dt>Planerad byggstart</dt><dd class="num">${p.bs}</dd>`:''}${p.dt?`<dt>Planerad drift</dt><dd class="num">${p.dt}</dd>`:''}${p.date?`<dt>Beslut</dt><dd class="num">${esc(p.date)}</dd>`:''}${p.why||p.desc?`<dt>Läge</dt><dd>${esc(p.why||p.desc)}</dd>`:''}${chkRow(p.t==='karn'?CHK_DATE:chkSvv(p))}</dl><div style="display:flex;gap:16px;flex-wrap:wrap">${p.w?`<a href="${esc(p.w)}" target="_blank" rel="noopener">${p.t==='karn'?'Källa 1':'Projektsida'} ↗</a>`:''}${p.src&&p.src!==p.w?`<a href="${esc(p.src)}" target="_blank" rel="noopener">${p.t==='karn'?'Källa 2':'Källa'} ↗</a>`:''}${p.t==='karn'?`<button class="linkbtn" type="button" id="tok">Mer under fliken Kärnkraft</button>`:''}</div>${st.d!==p.d&&devs[p.d].length>1?`<button class="linkbtn" type="button" id="sd">Visa alla ${devs[p.d].length} projekt från ${esc(p.d)}</button>`:''}<button class="linkbtn" type="button" id="cl" style="color:var(--muted)">Stäng</button>`;
     const sd=$('#sd');if(sd)sd.onclick=()=>{st.d=p.d;st.sel=null;apply()};$('#cl').onclick=()=>{st.sel=null;apply()};
     const tk=$('#tok');if(tk)tk.onclick=()=>{go('karn');kSelect(p.nid)};HS.btn(E);return}
   const v=P.filter(match);const by={};v.forEach(p=>by[p.s]=(by[p.s]||0)+1);
@@ -1115,7 +1140,7 @@ $('#timeline').innerHTML=ev.map(e=>`<div class="ev ${e[3]?'big':''}"><span class
 
 // timeline: durations
 const cT='var(--accent)', cN='var(--a-nat)', cS='var(--wait)', cA='var(--ink2)';
-gantt($('#svv-dur'),{from:0,to:120,sort:false,thick:12,ticks:[0,24,48,72,96,120],tick:t=>t?`${t/12} år`:'start'},[
+gantt($('#svv-dur'),{from:0,to:120,sort:false,thick:12,fmt:v=>v===0?'start':v<24?`${v} mån`:`${Math.round(v/12*10)/10} år`.replace('.',','),ticks:[0,24,48,72,96,120],tick:t=>t?`${t/12} år`:'start'},[
  {l:'Idé till byggstart, vindpark på land',s:'Vattenfall: ungefär 7–10 år',a:0,b:84,b2:120,c:cA,src:'https://group.vattenfall.com/se/var-verksamhet/vindprojekt/faq-vindkraft/hur-fungerar-tillstandsprocessen-for-en-vindkraftpark-pa-land'},
  {l:'Samråd till lagakraftvunnet tillstånd',s:'Vind på land, median 56 mån (2014–2024)',a:0,b:56,c:cT,src:'https://greenpowersweden.se/wp-content/uploads/2025/06/Handlaggningstider-2014-2024-landbaserad-vindkraft-2025-08-12-slutlig.pdf'},
  {l:'Ansökan till lagakraftvunnet tillstånd',s:'Median 39 mån, snitt 43 mån',a:0,b:39,c:cT,src:'https://greenpowersweden.se/wp-content/uploads/2025/06/Handlaggningstider-2014-2024-landbaserad-vindkraft-2025-08-12-slutlig.pdf'},
@@ -1156,7 +1181,7 @@ function list(){const q=$('#q').value.trim().toLowerCase(),s=qs.value,filt=!!(q|
   let tot=0;
   const html=Object.keys(TYPES).map(t=>{const rows=sorted.map(i=>P[i]).filter(p=>p.t===t&&(!s||p.s===s)&&(!q||[p.n,p.b,p.d,p.k,p.l].join(' ').toLowerCase().includes(q)));tot+=rows.length;
     if(!rows.length&&filt)return '';
-    return `<details class="grp" data-t="${t}"${(filt&&rows.length)||(!filt&&open.has(t))?' open':''}><summary>${TYPES[t]}<span class="c">${rows.length} projekt</span></summary><div class="tbl"><table><thead><tr><th>Projekt</th><th>Bolag</th><th>Plats</th><th>Storlek</th><th>Status</th><th>Länkar</th></tr></thead><tbody>${rows.map(p=>`<tr><td><b>${esc(p.n)}</b></td><td>${esc(p.b)}</td><td>${esc(p.k)}<span class="sub">${esc(p.l)}</span></td><td class="num" style="font-size:13px">${esc(size2(p))}</td><td>${badge(p.s)}</td><td style="white-space:nowrap">${p.w?`<a href="${esc(p.w)}" target="_blank" rel="noopener">${p.t==='karn'?'Källa':'Projekt'} ↗</a>`:''}${p.src&&p.src!==p.w?`<br><a href="${esc(p.src)}" target="_blank" rel="noopener">Källa ↗</a>`:''}</td></tr>`).join('')}</tbody></table></div></details>`}).join('');
+    return `<details class="grp" data-t="${t}"${(filt&&rows.length)||(!filt&&open.has(t))?' open':''}><summary>${TYPES[t]}<span class="c">${rows.length} projekt</span></summary><div class="tbl"><table><thead><tr><th>Projekt</th><th>Bolag</th><th>Plats</th><th>Storlek</th><th>Status</th><th>Länkar</th></tr></thead><tbody>${rows.map(p=>`<tr><td><b>${esc(p.n)}</b><span class="sub chk">Kontrollerad: ${esc(p.t==='karn'?CHK_DATE:chkSvv(p))}</span></td><td>${esc(p.b)}</td><td>${esc(p.k)}<span class="sub">${esc(p.l)}</span></td><td class="num" style="font-size:13px">${esc(size2(p))}</td><td>${badge(p.s)}</td><td style="white-space:nowrap">${p.w?`<a href="${esc(p.w)}" target="_blank" rel="noopener">${p.t==='karn'?'Källa':'Projekt'} ↗</a>`:''}${p.src&&p.src!==p.w?`<br><a href="${esc(p.src)}" target="_blank" rel="noopener">Källa ↗</a>`:''}</td></tr>`).join('')}</tbody></table></div></details>`}).join('');
   $('#groups').innerHTML=html||'<p class="hint">Inga projekt matchar sökningen.</p>';
   $('#count').textContent=`Visar ${tot} av ${P.length} projekt`;}
 $('#q').addEventListener('input',list);qs.addEventListener('change',list);list();
@@ -1307,7 +1332,7 @@ function nApply(fromBack){if(!fromBack)HN.rec();if(nst.se)showSE('SE'+nst.se);
 function nPanel(){const E=$('#n-panel');nPanel0(E);if(nst.sel!=null||nst.lan||nst.se)HN.btn(E)}
 function nPanel0(E){
   if(nst.sel!=null){const c=CO[nst.sel];
-    E.innerHTML=`<div class="eyebrow">${esc(c.cat)}</div><h3>${esc(c.name)}</h3>${cbadge(c.status)}<dl><dt>Projekt</dt><dd>${esc(c.proj)}</dd><dt>Län</dt><dd>${esc(c.lan)}</dd>${c.mw?`<dt>Effekt</dt><dd>${esc(c.mw)}</dd>`:''}<dt>Läge</dt><dd>${esc(c.text)}</dd></dl><div style="display:flex;gap:12px;flex-wrap:wrap">${c.links.map(l=>`<a href="${l[1]}" target="_blank" rel="noopener">${esc(l[0])} ↗</a>`).join('')}</div><button class="linkbtn" type="button" id="ncl" style="color:var(--muted)">Stäng</button>`;
+    E.innerHTML=`<div class="eyebrow">${esc(c.cat)}</div><h3>${esc(c.name)}</h3>${cbadge(c.status)}<dl><dt>Projekt</dt><dd>${esc(c.proj)}</dd><dt>Län</dt><dd>${esc(c.lan)}</dd>${c.mw?`<dt>Effekt</dt><dd>${esc(c.mw)}</dd>`:''}<dt>Läge</dt><dd>${esc(c.text)}</dd>${chkRow(c.chk||CHK_DATE)}</dl><div style="display:flex;gap:12px;flex-wrap:wrap">${c.links.map(l=>`<a href="${l[1]}" target="_blank" rel="noopener">${esc(l[0])} ↗</a>`).join('')}</div><button class="linkbtn" type="button" id="ncl" style="color:var(--muted)">Stäng</button>`;
     $('#ncl').onclick=()=>{nst.sel=null;nApply()};return}
   if(nst.se){const k='SE'+nst.se,d=SE[k],cos=CO.filter(c=>c.se===nst.se);
     E.innerHTML=`<div class="eyebrow">Elområde ${k}</div><dl><dt>Effektanvändning</dt><dd class="num">${mwf(d.tot[1])} <span class="hint">(${fmt(d.tot[1]/TOT.anv*100)} % av landet)</span></dd><dt>Elproduktion</dt><dd class="num">${mwf(d.tot[0])}</dd>${d.rows.filter(r=>r[2]).map(r=>`<dt>${r[0]}</dt><dd class="num">${mwf(r[2])}</dd>`).join('')}</dl>${cos.length?`<div><div class="hint" style="margin-bottom:6px">Företag i listan</div><ul>${cos.map(c=>`<li><button class="linkbtn" type="button" data-co="${CO.indexOf(c)}" style="text-decoration:none;color:var(--ink);font-weight:600">${esc(c.name)}</button> <span class="hint">${esc(c.proj)}</span></li>`).join('')}</ul></div>`:'<p class="hint">Inga företag i listan i detta elområde.</p>'}<p class="hint">Siffror per elområde enligt Svenska kraftnät. Tabellen per elområde längre ned visar samma område. Gränserna på kartan är ungefärliga.</p><button class="linkbtn" type="button" id="ncl" style="color:var(--muted)">Visa hela Sverige</button>`;
@@ -1368,7 +1393,7 @@ function render(){[...chips.children].forEach(b=>b.setAttribute('aria-pressed',S
   const lst=CO.filter(c=>(ccat==='Alla'||c.cat===ccat)&&(!nStat.value||c.status===nStat.value)&&(!q||(c.name+' '+c.proj+' '+c.lan+' '+c.text).toLowerCase().includes(q))).sort(sorters[nSort.value||'mw']);
   $('#ncount').textContent=lst.length+' poster';
   const filt=!!(q||nStat.value||ccat!=='Alla');const open=new Set([...document.querySelectorAll('#coGrid details[open]')].map(d=>d.dataset.s));
-  const card=c=>`<div class="co"><div class="top2"><h3>${esc(c.name)}</h3>${cbadge(c.status)}</div><div class="where">${esc(c.proj)} · ${esc(c.lan)}</div>${c.mw?`<div class="mw">${esc(c.mw)}</div>`:''}<p>${esc(c.text)}</p><div class="links">${c.links.map(l=>`<a href="${l[1]}" target="_blank" rel="noopener">${esc(l[0])} ↗</a>`).join('')}${c.ll?`<button class="linkbtn" type="button" data-show="${CO.indexOf(c)}" style="font-size:13px">Visa på kartan</button>`:''}</div></div>`;
+  const card=c=>`<div class="co"><div class="top2"><h3>${esc(c.name)}</h3>${cbadge(c.status)}</div><div class="where">${esc(c.proj)} · ${esc(c.lan)}</div>${c.mw?`<div class="mw">${esc(c.mw)}</div>`:''}<p>${esc(c.text)}</p><div class="chk">Senast kontrollerad: ${esc(c.chk||CHK_DATE)}</div><div class="links">${c.links.map(l=>`<a href="${l[1]}" target="_blank" rel="noopener">${esc(l[0])} ↗</a>`).join('')}${c.ll?`<button class="linkbtn" type="button" data-show="${CO.indexOf(c)}" style="font-size:13px">Visa på kartan</button>`:''}</div></div>`;
   $('#coGrid').innerHTML=SOR.map(k=>{const g=lst.filter(c=>c.status===k);if(!g.length)return '';return `<details class="grp cogrp" data-s="${k}"${(filt||open.has(k))?' open':''}><summary>${cbadge(k)}<span class="c">${g.length} ${g.length===1?'post':'poster'}</span></summary><div class="grid">${g.map(card).join('')}</div></details>`}).join('')||'<p class="hint">Inga företag matchar sökningen.</p>';}
 $('#coGrid').addEventListener('click',e=>{const b=e.target.closest('[data-show]');if(!b)return;nst.sel=+b.dataset.show;nst.lan=null;nst.cat=null;nst.se=null;nApply();scrollTo('v-nat')});
 render();
@@ -1403,7 +1428,7 @@ const srcList=n=>`<ul>${n.src.map(s=>`<li><a href="${s[1]}" target="_blank" rel=
 function kPanel(){const E=$('#k-panel');kPanel0(E);if(kst.sel!=null)HK.btn(E)}
 function kPanel0(E){
   if(kst.sel!=null){const n=NUC[kst.sel];
-    E.innerHTML=`<div class="eyebrow">Kärnkraft</div><h3>${esc(n.n)}</h3>${nbadge(n.st)}<dl><dt>Ägare</dt><dd>${esc(n.owner)}</dd><dt>Plats</dt><dd>${esc(n.kom)}, ${esc(n.l)}</dd>${n.tech?`<dt>Teknik</dt><dd>${esc(n.tech)}</dd>`:''}${n.mwt?`<dt>Effekt</dt><dd>${esc(n.mwt)}</dd>`:''}${n.reakt?`<dt>Reaktorer</dt><dd>${esc(n.reakt)}</dd>`:''}<dt>Tidsplan</dt><dd>${esc(n.dates)}</dd></dl><p style="font-size:14.5px;color:var(--ink2)">${esc(n.desc)}</p>${n.sec?'<p class="hint">Uppgiften bygger på en sekundärkälla.</p>':''}<div><div class="hint" style="margin-bottom:4px">Källor</div>${srcList(n)}</div><button class="linkbtn" type="button" id="kcl" style="color:var(--muted)">Stäng</button>`;
+    E.innerHTML=`<div class="eyebrow">Kärnkraft</div><h3>${esc(n.n)}</h3>${nbadge(n.st)}<dl><dt>Ägare</dt><dd>${esc(n.owner)}</dd><dt>Plats</dt><dd>${esc(n.kom)}, ${esc(n.l)}</dd>${n.tech?`<dt>Teknik</dt><dd>${esc(n.tech)}</dd>`:''}${n.mwt?`<dt>Effekt</dt><dd>${esc(n.mwt)}</dd>`:''}${n.reakt?`<dt>Reaktorer</dt><dd>${esc(n.reakt)}</dd>`:''}<dt>Tidsplan</dt><dd>${esc(n.dates)}</dd>${chkRow(n.sec?'1 okt 2026 (bygger på sekundärkälla)':CHK_DATE)}</dl><p style="font-size:14.5px;color:var(--ink2)">${esc(n.desc)}</p>${n.sec?'<p class="hint">Uppgiften bygger på en sekundärkälla.</p>':''}<div><div class="hint" style="margin-bottom:4px">Källor</div>${srcList(n)}</div><button class="linkbtn" type="button" id="kcl" style="color:var(--muted)">Stäng</button>`;
     $('#kcl').onclick=()=>{kst.sel=null;kApply()};return}
   const v=NUC.filter(kMatch),by={};v.forEach(n=>by[n.st]=(by[n.st]||0)+1);
   E.innerHTML=`<div class="eyebrow">${kst.d?esc(kst.d):'Alla anläggningar'}${kst.se?' · SE'+kst.se:''}</div><div class="big">${v.length} <span>anläggningar och projekt</span></div><div style="display:flex;flex-wrap:wrap;gap:6px">${NORD.filter(s=>by[s]).map(s=>`${nbadge(s)} <span class="num" style="margin-right:6px">${by[s]}</span>`).join('')}</div><div><div class="hint" style="margin-bottom:6px">Nya projekt med ansökan</div><ul>${nucApp.map(n=>`<li><button class="linkbtn" type="button" data-n="${NUC.indexOf(n)}" style="text-decoration:none;color:var(--ink);font-weight:600">${esc(n.n)}</button> <span class="hint">${esc(n.mwt)}</span></li>`).join('')}</ul></div><p class="hint">Tryck på en markering för detaljer.</p>`;
@@ -1449,7 +1474,7 @@ const POL=[
 ];
 $('#k-pol').innerHTML=POL.map(e=>`<div class="ev ${e[3]?'big':''}"><span class="d">${e[0]}</span><h3>${e[1]}</h3><p>${e[2]} <a href="${e[4]}" target="_blank" rel="noopener">Källa ↗</a></p></div>`).join('');
 $('#k-muni').innerHTML=`<h3>Kommuner med statligt stöd för förstudier</h3><p style="color:var(--ink2);font-size:14.5px">Naturvårdsverket fördelade 19,8 miljoner kronor i april 2026 till nio kommuner:</p><div class="chips">${['Gävle','Kävlinge','Nyköping','Oskarshamn','Svalöv','Söderhamn','Valdemarsvik','Varberg','Östhammar'].map(k=>`<span class="badge">${k}</span>`).join('')}</div><p class="hint"><a href="https://www.energinyheter.se/20260422/34624/statligt-stod-till-karnkraftsstudier-i-nio-kommuner" target="_blank" rel="noopener">Energinyheter – stöd till nio kommuner</a> · <a href="https://www.soderhamn.se/sidor/arkiv/nyhetsarkiv/nyheter/2026-03-12-kommunstyrelsen-tog-beslut-om-att-soka-bidrag-till-forstudie-om-karnkraft.html" target="_blank" rel="noopener">Söderhamns kommun</a></p><h3 style="margin-top:8px">Fler aktörer</h3><ul><li><b>Industrikraft i Sverige AB</b> – ägs av bl.a. ABB, Alfa Laval, Boliden, Hitachi Energy, Höganäs, Saab, Stora Enso, SSAB och Volvo Group; delägare i Videberg Kraft. <a href="https://www.industrikraft.se/en" target="_blank" rel="noopener">Källa ↗</a></li><li><b>Steady Energy</b> – finskt bolag med värmereaktorn LDR-50 (50 MW värme), etablerat i Sverige mars 2026. Ingen svensk kommun namngiven; första svenska reaktor tidigast mitten–slutet av 2030-talet. <a href="https://www.energi.se/artiklar/2026/mars-2026/finskt-bolag-vill-bygga-sma-karnvarmereaktorer-i-sverige/" target="_blank" rel="noopener">Källa ↗</a></li></ul>`;
-$('#k-groups').innerHTML=NORD.map(s=>{const l=NUC.filter(n=>n.st===s);if(!l.length)return'';return `<details class="grp"${s==='ansokan'?' open':''}><summary>${nbadge(s)}<span class="c">${l.length}</span></summary><div class="tbl"><table><thead><tr><th>Anläggning</th><th>Plats</th><th>Teknik och effekt</th><th>Tidsplan</th><th>Källor</th></tr></thead><tbody>${l.map(n=>`<tr><td><b>${esc(n.n)}</b><span class="sub">${esc(n.owner)}</span></td><td>${esc(n.kom)}<span class="sub">${esc(n.l)}</span></td><td>${esc(n.tech)}${n.mwt?`<span class="sub">${esc(n.mwt)}</span>`:''}</td><td style="font-size:13.5px">${esc(n.dates)}</td><td style="font-size:13px">${n.src.map((x,j)=>`<a href="${x[1]}" target="_blank" rel="noopener" title="${esc(x[0])}">Källa ${j+1} ↗</a>`).join('<br>')}</td></tr>`).join('')}</tbody></table></div></details>`}).join('');
+$('#k-groups').innerHTML=NORD.map(s=>{const l=NUC.filter(n=>n.st===s);if(!l.length)return'';return `<details class="grp"${s==='ansokan'?' open':''}><summary>${nbadge(s)}<span class="c">${l.length}</span></summary><div class="tbl"><table><thead><tr><th>Anläggning</th><th>Plats</th><th>Teknik och effekt</th><th>Tidsplan</th><th>Källor</th></tr></thead><tbody>${l.map(n=>`<tr><td><b>${esc(n.n)}</b><span class="sub">${esc(n.owner)}</span><span class="sub chk">Kontrollerad: ${CHK_DATE}</span></td><td>${esc(n.kom)}<span class="sub">${esc(n.l)}</span></td><td>${esc(n.tech)}${n.mwt?`<span class="sub">${esc(n.mwt)}</span>`:''}</td><td style="font-size:13.5px">${esc(n.dates)}</td><td style="font-size:13px">${n.src.map((x,j)=>`<a href="${x[1]}" target="_blank" rel="noopener" title="${esc(x[0])}">Källa ${j+1} ↗</a>`).join('<br>')}</td></tr>`).join('')}</tbody></table></div></details>`}).join('');
 
 /* =========================================================
    ÖVERSIKT
@@ -1544,7 +1569,8 @@ const dShape=(d)=>{const r=DR(d),x=d.x,y=d.y_;let e;
 const drift=DI.filter(d=>d.st==='drift');
 const sumMw=t=>drift.filter(d=>d.t===t).reduce((a,d)=>a+(d.mw||0),0);
 $('#d-kpis').innerHTML=[['54 250 MW','installerad effekt totalt, slutet av 2025'],['18 343 MW','vindkraft'],['16 276 MW','vattenkraft'],['7 012 MW','kärnkraft'],['5 541 MW','solel'],['166,9 TWh','elproduktion 2025','hot']].map(k=>`<div class="kpi ${k[2]||''}"><b>${k[0]}</b><span>${k[1]}</span></div>`).join('');
-const hbars=(box,rows,unit,M)=>{const mx=M||Math.max(...rows.map(r=>r[1]));box.innerHTML=rows.map(r=>`<div class="hb"><span>${r[0]}</span><span class="t"><i style="width:${r[1]/mx*100}%;background:${r[2]}"></i></span><span class="v">${fmt(r[1])} ${unit}</span></div>`).join('')};
+const hbars=(box,rows,unit,M)=>{const mx=M||Math.max(...rows.map(r=>r[1]));const tot=rows.reduce((a,r)=>a+r[1],0);box.innerHTML=rows.map((r,i)=>`<div class="hb" data-hi="${i}"><span>${r[0]}</span><span class="t"><i style="width:${r[1]/mx*100}%;background:${r[2]}"></i></span><span class="v">${fmt(r[1])} ${unit}</span></div>`).join('');
+  box.onpointermove=e=>{const h=e.target.closest('.hb');if(!h){hideTT();return}const r=rows[+h.dataset.hi];showTT(`<b>${r[0]}</b>${fmt(r[1])} ${unit}${box.dataset.share!=='no'?`<br><span style="opacity:.8">${fmt(r[1]/tot*100)} % av staplarna i rutan</span>`:''}${r[3]?'<br>'+r[3]:''}`,e.clientX,e.clientY)};box.onpointerleave=hideTT};
 hbars($('#d-mw'),[['Vindkraft',18343,'var(--c-vind)'],['Vattenkraft',16276,'var(--c-vatten)'],['Kärnkraft',7012,'var(--c-karn)'],['Sol',5541,'var(--c-sol)']],'MW');
 hbars($('#d-twh'),[['Vattenkraft',68.6,'var(--c-vatten)'],['Kärnkraft',45.0,'var(--c-karn)'],['Vindkraft',38.9,'var(--c-vind)'],['Övrig värmekraft',11.6,'var(--other)'],['Sol',4.4,'var(--c-sol)']],'TWh');
 
@@ -1572,7 +1598,7 @@ function dApply(fromBack){if(!fromBack)HD.rec();setChips(dT,dst.t);setChips(dTe,
 function dPanel(){const E=$('#d-panel');dPanel0(E);if(dst.sel!=null)HD.btn(E)}
 function dPanel0(E){
   if(dst.sel!=null){const d=DI[dst.sel];
-    E.innerHTML=`<div class="eyebrow">${DT[d.t]}</div><h3>${esc(d.n)}</h3>${dBadge(d)}<dl><dt>Ägare</dt><dd>${esc(d.o)}</dd><dt>Plats</dt><dd>${esc([d.k,d.l].filter(Boolean).join(', '))}${d.approx?' <span class="hint">(ungefärligt läge)</span>':''}</dd><dt>Effekt</dt><dd>${esc(d.mwt)}</dd>${d.gwh?`<dt>Beräknad produktion</dt><dd class="num">${fmt(d.gwh)} GWh/år</dd>`:''}<dt>${d.t==='karn'?'Tidsplan':'I drift'}</dt><dd>${esc(d.y)}</dd>${d.se?`<dt>Elområde</dt><dd>SE${d.se}</dd>`:''}${d.vbk?`<dt>Områdes-id</dt><dd class="num">${esc(d.vbk)}</dd>`:''}</dl>${d.note?`<p style="font-size:14.5px;color:var(--ink2)">${esc(d.note)}</p>`:''}<div><div class="hint" style="margin-bottom:4px">Källor</div><ul>${d.src.map(x=>`<li><a href="${x[1]}" target="_blank" rel="noopener">${esc(x[0])} ↗</a></li>`).join('')}</ul></div><button class="linkbtn" type="button" id="dcl" style="color:var(--muted)">Stäng</button>`;
+    E.innerHTML=`<div class="eyebrow">${DT[d.t]}</div><h3>${esc(d.n)}</h3>${dBadge(d)}<dl><dt>Ägare</dt><dd>${esc(d.o)}</dd><dt>Plats</dt><dd>${esc([d.k,d.l].filter(Boolean).join(', '))}${d.approx?' <span class="hint">(ungefärligt läge)</span>':''}</dd><dt>Effekt</dt><dd>${esc(d.mwt)}</dd>${d.gwh?`<dt>Beräknad produktion</dt><dd class="num">${fmt(d.gwh)} GWh/år</dd>`:''}<dt>${d.t==='karn'?'Tidsplan':'I drift'}</dt><dd>${esc(d.y)}</dd>${d.se?`<dt>Elområde</dt><dd>SE${d.se}</dd>`:''}${d.vbk?`<dt>Områdes-id</dt><dd class="num">${esc(d.vbk)}</dd>`:''}${chkRow(d.vbk?'Enligt Vindbrukskollens export, sept 2026':CHK_DATE)}</dl>${d.note?`<p style="font-size:14.5px;color:var(--ink2)">${esc(d.note)}</p>`:''}<div><div class="hint" style="margin-bottom:4px">Källor</div><ul>${d.src.map(x=>`<li><a href="${x[1]}" target="_blank" rel="noopener">${esc(x[0])} ↗</a></li>`).join('')}</ul></div><button class="linkbtn" type="button" id="dcl" style="color:var(--muted)">Stäng</button>`;
     $('#dcl').onclick=()=>{dst.sel=null;dApply()};return}
   const v=DI.filter(dMatch),mwS=v.reduce((a,d)=>a+(d.mw||0),0),by={};v.forEach(d=>by[d.t]=(by[d.t]||0)+1);
   const top=v.slice().sort((a,b)=>(b.mw||0)-(a.mw||0)).slice(0,6);
@@ -1607,7 +1633,7 @@ function dList(){const q=$('#dq').value.trim().toLowerCase(),L=dLan.value,filt=!
   const open=new Set([...document.querySelectorAll('#d-groups details[open]')].map(d=>d.dataset.g));let tot=0;
   $('#d-groups').innerHTML=DGR.map(([g,title,f])=>{const rows=DI.filter(d=>f(d)&&(!L||d.l===L)&&(!q||[d.n,d.o,d.k,d.l].join(' ').toLowerCase().includes(q))).sort(dSorters[dSort.value||'mw']);tot+=rows.length;
     if(!rows.length&&filt)return'';const lim=dLimit[g]||60,shown=rows.slice(0,lim);
-    return `<details class="grp" data-g="${g}"${(filt&&rows.length)||open.has(g)?' open':''}><summary>${title}<span class="c">${rows.length} st · ${mwf(Math.round(rows.reduce((a,d)=>a+(d.mw||0),0)))}</span></summary><div class="tbl"><table><thead><tr><th>Anläggning</th><th>Ägare</th><th>Plats</th><th>Effekt</th><th>I drift</th><th>Källa</th></tr></thead><tbody>${shown.map(d=>`<tr><td><b>${esc(d.n)}</b>${d.se?`<span class="sub">SE${d.se}</span>`:''}</td><td>${esc(d.o)}</td><td>${esc(d.k)}<span class="sub">${esc(d.l)}</span></td><td class="num" style="font-size:13px">${esc(d.mwt)}</td><td style="font-size:13.5px">${d.t==='lager'?dBadge(d)+'<br>':''}${esc(d.t==='karn'?(d.st==='drift'?'I drift':'Stängd'):d.y)}</td><td style="white-space:nowrap;font-size:13px">${d.src.map((x,j)=>`<a href="${x[1]}" target="_blank" rel="noopener" title="${esc(x[0])}">${d.src.length>1?'Källa '+(j+1):'Källa'} ↗</a>`).join('<br>')}${d.x!=null?`<br><button class="linkbtn" type="button" data-show-d="${DI.indexOf(d)}" style="font-size:13px">Visa på kartan</button>`:''}</td></tr>`).join('')}</tbody></table></div>${rows.length>lim?`<button class="more" type="button" data-more="${g}">Visa ${Math.min(100,rows.length-lim)} till (${rows.length-lim} kvar)</button>`:''}</details>`}).join('')||'<p class="hint">Inga anläggningar matchar sökningen.</p>';
+    return `<details class="grp" data-g="${g}"${(filt&&rows.length)||open.has(g)?' open':''}><summary>${title}<span class="c">${rows.length} st · ${mwf(Math.round(rows.reduce((a,d)=>a+(d.mw||0),0)))}</span></summary><div class="tbl"><table><thead><tr><th>Anläggning</th><th>Ägare</th><th>Plats</th><th>Effekt</th><th>I drift</th><th>Källa</th></tr></thead><tbody>${shown.map(d=>`<tr><td><b>${esc(d.n)}</b>${d.se?`<span class="sub">SE${d.se}</span>`:''}<span class="sub chk">Kontrollerad: ${d.vbk?'Vindbrukskollen, sept 2026':CHK_DATE}</span></td><td>${esc(d.o)}</td><td>${esc(d.k)}<span class="sub">${esc(d.l)}</span></td><td class="num" style="font-size:13px">${esc(d.mwt)}</td><td style="font-size:13.5px">${d.t==='lager'?dBadge(d)+'<br>':''}${esc(d.t==='karn'?(d.st==='drift'?'I drift':'Stängd'):d.y)}</td><td style="white-space:nowrap;font-size:13px">${d.src.map((x,j)=>`<a href="${x[1]}" target="_blank" rel="noopener" title="${esc(x[0])}">${d.src.length>1?'Källa '+(j+1):'Källa'} ↗</a>`).join('<br>')}${d.x!=null?`<br><button class="linkbtn" type="button" data-show-d="${DI.indexOf(d)}" style="font-size:13px">Visa på kartan</button>`:''}</td></tr>`).join('')}</tbody></table></div>${rows.length>lim?`<button class="more" type="button" data-more="${g}">Visa ${Math.min(100,rows.length-lim)} till (${rows.length-lim} kvar)</button>`:''}</details>`}).join('')||'<p class="hint">Inga anläggningar matchar sökningen.</p>';
   $('#d-count').textContent=`Visar ${tot} av ${DI.length} anläggningar`;}
 $('#dq').addEventListener('input',dList);dLan.onchange=dList;dSort.onchange=dList;
 $('#d-groups').addEventListener('click',e=>{const m=e.target.closest('[data-more]');if(m){dLimit[m.dataset.more]=(dLimit[m.dataset.more]||60)+100;dList();return}
@@ -1657,6 +1683,7 @@ const TOUR=[
  {v:'nat',sel:'#n-listbar',h:'Sortera företagen',p:'Sök, filtrera på status och sortera efter effekt, namn, status eller län.'},
  {v:'karn',sel:'#k-map',h:'Kärnkraft',p:'Reaktorer i drift, stängda anläggningar och nya projekt. Tryck på en markering för ägare, teknik, tidsplan och källor.'},
  {v:'drift',sel:'#d-kartan .mapgrid',h:'Det som redan finns',p:'Alla uppförda vindkraftsområden, de största vatten- och solkraftverken, havsvind och kärnkraft – samt det som har avvecklats.'},
+ {v:'ovr',sel:'#searchBtn',h:'Sök i allt',p:'Sök efter ett bolag, en kommun eller ett projekt i alla flikar på en gång. Tryck på en träff för att se den på kartan. Under varje lista finns också en knapp för att ladda ner listan som Excel.'},
  {v:'ovr',sel:'#brand',h:'Börja om',p:'Tryck på logotypen för att ladda om sidan och börja från Översikt. I varje karta finns också en Tillbaka-knapp som ångrar ditt senaste val. Klart – utforska på egen hand!'}
 ];
 let ti=-1;const tDim=document.createElement('div'),tHole=document.createElement('div'),tCard=document.createElement('div');
@@ -1765,14 +1792,14 @@ const SEL={
 };
 const LANES=[
  {hdr:'Efterfrågan – anslutningskön',c:cN_},
- {k:'dc',l:'Datacenter, önskad drift 2026–2030',s:'4 006 MW i Svenska kraftnäts kö',a:2026,b:2031,c:cN_,mw:4006,mwl:'4 006 MW',src:SVKD},
- {k:'dc',l:'Datacenter, önskad drift 2031–2035',s:'2 922 MW i kön',a:2031,b:2036,c:cN_,mw:2922,mwl:'2 922 MW',src:SVKD},
+ {k:'dc',l:'Datacenter, önskad drift 2026–2030',s:'4 006 MW i Svenska kraftnäts kö',per:'önskad drift 2026–2030',a:2026,b:2031,c:cN_,mw:4006,mwl:'4 006 MW',src:SVKD},
+ {k:'dc',l:'Datacenter, önskad drift 2031–2035',s:'2 922 MW i kön',per:'önskad drift 2031–2035',a:2031,b:2036,c:cN_,mw:2922,mwl:'2 922 MW',src:SVKD},
  {k:'co:'+ci('Stegra'),l:'Stegra, Boden – grönt stål',s:'Produktionsstart planerad 2026 · ca 700–800 MW elektrolys',dot:2026.5,c:cN_,mw:750,mwl:'ca 750 MW',src:'https://www.gem.wiki/Stegra_Boden_steel_plant'},
  {k:'co:'+ci('atNorth (Equinix'),l:'atNorth, Sollefteå',s:'300 MW · drift första halvåret 2028',a:2026.1,b:2028,b2:2028.5,c:cN_,mw:300,mwl:'300 MW',src:'https://datacentersweden.se/projects/atnorth-swe04-solleftea/'},
  {k:'co:'+ci('Google'),l:'Google, Horndal',s:'Markarbeten nov 2025 · planerat klart 2028',a:2025+10/12,b:2028,c:cN_,src:'https://www.svt.se/nyheter/lokalt/dalarna/beskedet-google-bygger-datacenter-i-horndal'},
  {k:'co:'+ci('Brookfield'),l:'Brookfield, Strängnäs',s:'Upp till 750 MW · full kapacitet inom 10–15 år från juni 2025',a:2025.42,b:2035.42,b2:2040.42,c:cN_,mw:750,mwl:'750 MW',src:'https://ravarumarknaden.se/brookfield-ska-bygga-ett-ai-datacenter-pa-hela-750-mw-i-strangnas/'},
  {hdr:'Ny produktion – sol, vind och vatten',c:cV},
- {k:'built',l:'Vindkraft byggd 2019–2025',s:`${mwf(Math.round(built))} uppförd effekt enligt Vindbrukskollen`,a:2019,b:2026,c:'var(--ok)',mw:built,mwl:mwf(Math.round(built)),src:'https://vbk.lansstyrelsen.se/'},
+ {k:'built',l:'Vindkraft byggd 2019–2025',per:'2019–2025',s:`${mwf(Math.round(built))} uppförd effekt enligt Vindbrukskollen`,a:2019,b:2026,c:'var(--ok)',mw:built,mwl:mwf(Math.round(built)),src:'https://vbk.lansstyrelsen.se/'},
  {k:'wind',l:'Beviljad vind med planerad drift',s:`${wn.length} parker med drift ${Math.floor(Math.min(...wys))}–${Math.floor(Math.max(...wys))}, minst ${mwf(Math.round(wmw))}`,a:Math.min(...wys),b:Math.max(...wys),c:'var(--wait)',mw:wmw,mwl:mwf(Math.round(wmw)),src:'https://vbk.lansstyrelsen.se/'},
  {k:'p:'+pi('Fyrskeppet'),l:'Havsvind: Fyrskeppet',s:'93 verk, 8–11 TWh/år · tillstånd juli 2026, ingen byggstart angiven',dot:2026.54,c:cV,src:'https://www.regeringen.se/pressmeddelanden/2026/07/nya-beslut-om-havsbaserad-vindkraft/'},
  {k:'p:'+pi('Vidar'),l:'Havsvind: Vidar',s:'75 verk, upp till 7,8 TWh/år · tillstånd juli 2026',dot:2026.54,c:cV,src:'https://www.regeringen.se/pressmeddelanden/2026/07/nya-beslut-om-havsbaserad-vindkraft/'},
@@ -1798,8 +1825,8 @@ $('#lanes-leg').innerHTML=gl(cN_,'Efterfrågan och nät')+gl(cV,'Sol, vind och v
 const beviljad=P0.filter(p=>p.t.startsWith('vind')&&p.s==='fastnat').reduce((a,p)=>a+(p.mw||0),0);
 const nyK=NUC.filter(n=>n.st==='ansokan'||n.st==='plan').reduce((a,n)=>a+(n.mw||0),0);
 const M=11122;
-hbars($('#big-dem'),[['Industri',11122,cN_],['Datacenter',6984,cN_],['Övrig elanvändning',5630,cN_],['Energilager',2206,cN_]],'MW',M);
-hbars($('#big-sup'),[['Vind i kön',9004,cV],['Sol i kön',4844,'var(--c-sol)'],['Övrig prod. i kön',4348,'var(--other)'],['Energilager i kön',2260,'var(--other)'],['Beviljad vind, ej byggstart (känd effekt)',Math.round(beviljad),'var(--wait)'],['Ny kärnkraft, ansökt eller planerad',Math.round(nyK),cK],['Kärnkraft som når 60 år 2040–45',6922,'var(--stop)']],'MW',M);
+hbars($('#big-dem'),[['Industri',11122,cN_,'Svenska kraftnäts kö, 1 sep 2026'],['Datacenter',6984,cN_,'4 006 MW önskar drift 2026–2030, 2 922 MW 2031–2035'],['Övrig elanvändning',5630,cN_,'Främst regionnätens ansökningar för allmän lastökning'],['Energilager',2206,cN_,'Energilager, uttag, i kön']],'MW',M);
+hbars($('#big-sup'),[['Vind i kön',9004,cV,'Landbaserad vindkraft i Svenska kraftnäts kö, 1 sep 2026'],['Sol i kön',4844,'var(--c-sol)','Solkraft i Svenska kraftnäts kö, 1 sep 2026'],['Övrig prod. i kön',4348,'var(--other)','Övrig elproduktion i kön, 1 sep 2026'],['Energilager i kön',2260,'var(--other)','Energilager, inmatning, i kön'],['Beviljad vind, ej byggstart (känd effekt)',Math.round(beviljad),'var(--wait)','Vindparker med tillstånd men utan byggstart där effekten är känd (Vindbrukskollen). Kan överlappa kön.'],['Ny kärnkraft, ansökt eller planerad',Math.round(nyK),cK,'Högsta angivna effekt för Videberg, Målma, Studsvik och Blykalla'],['Kärnkraft som når 60 år 2040–45',6922,'var(--stop)','Forsmark 1–3, Ringhals 3–4 och Oskarshamn 3. Drift till 80 år utreds.']],'MW',M);
 })();
 
 /* =========================================================
@@ -1847,6 +1874,83 @@ hbars($('#big-sup'),[['Vind i kön',9004,cV],['Sol i kön',4844,'var(--c-sol)'],
     BOOT[cur]=rows.map((r,k)=>Object.assign(r,{_id:seedIds[cur][k],ord:k}))}
   btn.onclick=()=>{list();dlg.hidden=false;document.body.style.overflow='hidden'};
   $('#dataClose').onclick=()=>{dlg.hidden=true;document.body.style.overflow=''};
+})();
+
+/* =========================================================
+   EXCEL-EXPORT (egen liten xlsx-skrivare, fungerar offline)
+   ========================================================= */
+const CRC=(()=>{const t=new Uint32Array(256);for(let n=0;n<256;n++){let c=n;for(let k=0;k<8;k++)c=c&1?0xEDB88320^(c>>>1):c>>>1;t[n]=c>>>0}return b=>{let c=0xFFFFFFFF;for(let i=0;i<b.length;i++)c=t[(c^b[i])&255]^(c>>>8);return(c^0xFFFFFFFF)>>>0}})();
+function zip(files){const enc=new TextEncoder(),parts=[],cd=[];let off=0;
+  const u16=v=>[v&255,(v>>8)&255],u32=v=>[v&255,(v>>8)&255,(v>>16)&255,(v>>>24)&255];
+  files.forEach(([name,txt])=>{const nb=enc.encode(name),db=enc.encode(txt),crc=CRC(db);
+    const lh=new Uint8Array([0x50,0x4b,3,4,...u16(20),...u16(0x0800),...u16(0),...u16(0),...u16(0x21),...u32(crc),...u32(db.length),...u32(db.length),...u16(nb.length),...u16(0)]);
+    parts.push(lh,nb,db);
+    cd.push(new Uint8Array([0x50,0x4b,1,2,...u16(20),...u16(20),...u16(0x0800),...u16(0),...u16(0),...u16(0x21),...u32(crc),...u32(db.length),...u32(db.length),...u16(nb.length),...u16(0),...u16(0),...u16(0),...u16(0),...u32(0),...u32(off)]),nb);
+    off+=lh.length+nb.length+db.length});
+  const cdl=cd.reduce((a,b)=>a+b.length,0);
+  const end=new Uint8Array([0x50,0x4b,5,6,0,0,0,0,...u16(files.length),...u16(files.length),...u32(cdl),...u32(off),0,0]);
+  return new Blob([...parts,...cd,end],{type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'})}
+function xlsx(sheetName,cols,rows,note){
+  const xe=v=>String(v??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])).replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F]/g,'');
+  const colL=i=>{let s='';i++;while(i){const m=(i-1)%26;s=String.fromCharCode(65+m)+s;i=Math.floor((i-1)/26)}return s};
+  const cell=(r,c,v,st)=>typeof v==='number'&&isFinite(v)?`<c r="${colL(c)}${r}" s="${st}"><v>${v}</v></c>`:`<c r="${colL(c)}${r}" s="${st}" t="inlineStr"><is><t xml:space="preserve">${xe(v)}</t></is></c>`;
+  let rIdx=1,sd='';
+  sd+=`<row r="${rIdx}" ht="26" customHeight="1">${cell(rIdx,0,'Energikartan – '+sheetName,3)}</row>`;rIdx++;
+  sd+=`<row r="${rIdx}">${cell(rIdx,0,note,4)}</row>`;rIdx+=2;
+  sd+=`<row r="${rIdx}" ht="22" customHeight="1">${cols.map((c,i)=>cell(rIdx,i,c[0],1)).join('')}</row>`;const hr=rIdx;rIdx++;
+  rows.forEach((r,ri)=>{sd+=`<row r="${rIdx}">${r.map((v,i)=>cell(rIdx,i,v,ri%2?5:2)).join('')}</row>`;rIdx++});
+  const ws=`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"><sheetViews><sheetView workbookViewId="0"><pane ySplit="${hr}" topLeftCell="A${hr+1}" activePane="bottomLeft" state="frozen"/></sheetView></sheetViews><cols>${cols.map((c,i)=>`<col min="${i+1}" max="${i+1}" width="${c[1]||18}" customWidth="1"/>`).join('')}</cols><sheetData>${sd}</sheetData><autoFilter ref="A${hr}:${colL(cols.length-1)}${Math.max(hr,rIdx-1)}"/></worksheet>`;
+  const styles=`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><styleSheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"><fonts count="4"><font><sz val="11"/><color rgb="FF221C15"/><name val="Calibri"/></font><font><b/><sz val="11"/><color rgb="FFFFFFFF"/><name val="Calibri"/></font><font><b/><sz val="16"/><color rgb="FF7D5C2C"/><name val="Calibri"/></font><font><i/><sz val="10"/><color rgb="FF6F665A"/><name val="Calibri"/></font></fonts><fills count="4"><fill><patternFill patternType="none"/></fill><fill><patternFill patternType="gray125"/></fill><fill><patternFill patternType="solid"><fgColor rgb="FFA9814C"/></patternFill></fill><fill><patternFill patternType="solid"><fgColor rgb="FFF5EEE2"/></patternFill></fill></fills><borders count="2"><border/><border><bottom style="thin"><color rgb="FFE3DED3"/></bottom></border></borders><cellStyleXfs count="1"><xf/></cellStyleXfs><cellXfs count="6"><xf/><xf fontId="1" fillId="2" borderId="0" applyFont="1" applyFill="1"><alignment vertical="center" wrapText="1"/></xf><xf fontId="0" fillId="0" borderId="1" applyBorder="1"><alignment vertical="top" wrapText="1"/></xf><xf fontId="2" applyFont="1"/><xf fontId="3" applyFont="1"/><xf fontId="0" fillId="3" borderId="1" applyFill="1" applyBorder="1"><alignment vertical="top" wrapText="1"/></xf></cellXfs><cellStyles count="1"><cellStyle name="Normal" xfId="0" builtinId="0"/></cellStyles></styleSheet>`;
+  return zip([
+   ['[Content_Types].xml','<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/xl/workbook.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml"/><Override PartName="/xl/worksheets/sheet1.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/><Override PartName="/xl/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.styles+xml"/></Types>'],
+   ['_rels/.rels','<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="xl/workbook.xml"/></Relationships>'],
+   ['xl/workbook.xml',`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><workbook xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"><sheets><sheet name="${xe(sheetName.slice(0,31))}" sheetId="1" r:id="rId1"/></sheets><definedNames><definedName name="_xlnm._FilterDatabase" localSheetId="0" hidden="1">'${xe(sheetName.slice(0,31))}'!$A$${hr}:$${colL(cols.length-1)}$${Math.max(hr,rIdx-1)}</definedName></definedNames></workbook>`],
+   ['xl/_rels/workbook.xml.rels','<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet" Target="worksheets/sheet1.xml"/><Relationship Id="rId2" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles" Target="styles.xml"/></Relationships>'],
+   ['xl/styles.xml',styles],['xl/worksheets/sheet1.xml',ws]])}
+async function saveBlob(blob,filename){
+  try{if(window.claude&&window.claude.use){const dl=await Promise.race([window.claude.use('downloads'),new Promise(r=>setTimeout(()=>r(null),1500))]);
+    if(dl){await dl.save({filename,data:blob});return}}}catch(e){}
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=filename;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},2000)}
+const today=new Date().toISOString().slice(0,10);
+const stamp=f=>`Uttag ${today}. ${f}. Källor per rad. Sammanställt av The Labyrinth Public Affairs.`;
+const XP={
+ svv:()=>{const q=$('#q').value.trim().toLowerCase(),sv=qs.value;const rows=sorted.map(i=>P[i]).filter(p=>(!sv||p.s===sv)&&(!q||[p.n,p.b,p.d,p.k,p.l].join(' ').toLowerCase().includes(q)));
+   return['Sol vind vatten',[['Projekt',34],['Kraftslag',16],['Status',24],['Bolag',28],['Koncern',22],['Plats',30],['Län',20],['Verk',8],['MW',10],['TWh/år',9],['Planerad byggstart',14],['Planerad drift',14],['Beslut',12],['Läge / beskrivning',50],['Projektsida',40],['Källa',40],['Senast kontrollerad',22]],
+   rows.map(p=>[p.n,TYPES[p.t],STAT[p.s][1],p.b,p.d,p.k,p.l,p.verk??'',p.mw??'',p.twh??'',p.bs||'',p.dt||'',p.date||'',p.why||p.desc||'',p.w||'',p.src||'',p.t==='karn'?CHK_DATE:chkSvv(p)]),
+   stamp(`${rows.length} projekt${q||sv?' (filtrerat)':''}`)]},
+ co:()=>{const q=$('#nq').value.trim().toLowerCase();const rows=CO.filter(c=>(ccat==='Alla'||c.cat===ccat)&&(!nStat.value||c.status===nStat.value)&&(!q||(c.name+' '+c.proj+' '+c.lan+' '+c.text).toLowerCase().includes(q))).sort(sorters[nSort.value||'mw']);
+   return['Elnätet företag',[['Företag',30],['Kategori',16],['Projekt',36],['Län',18],['Effekt',22],['Status',16],['Beskrivning',60],['Källor',60],['Senast kontrollerad',18]],
+   rows.map(c=>[c.name,c.cat,c.proj,c.lan,c.mw||'',CST[c.status][1],c.text,c.links.map(l=>l[0]+': '+l[1]).join('\n'),c.chk||CHK_DATE]),stamp(`${rows.length} poster`)]},
+ kq:()=>['Kärnkraft',[['Anläggning',34],['Status',22],['Ägare',40],['Kommun',16],['Län',18],['Teknik',30],['Effekt',24],['Reaktorer',10],['Tidsplan',60],['Beskrivning',50],['Källor',60],['Senast kontrollerad',18]],
+   NUC.filter(kMatch).map(n=>[n.n,NST[n.st][1],n.owner,n.kom,n.l,n.tech,n.mwt||'',n.reakt||'',n.dates,n.desc,n.src.map(x=>x[0]+': '+x[1]).join('\n'),n.sec?'1 okt 2026 (sekundärkälla)':CHK_DATE]),stamp('Anläggningar enligt aktuellt filter på kartan')],
+ dq:()=>{const q=$('#dq').value.trim().toLowerCase(),L=dLan.value;const rows=DI.filter(d=>(!L||d.l===L)&&(!q||[d.n,d.o,d.k,d.l].join(' ').toLowerCase().includes(q))).sort(dSorters[dSort.value||'mw']);
+   return['I drift och avvecklat',[['Anläggning',34],['Kraftslag',18],['Teknik',16],['Status',14],['Ägare',30],['Kommun',16],['Län',20],['Elområde',9],['MW',10],['Effekt (text)',30],['I drift / tidsplan',26],['Beskrivning',40],['Källor',50],['Senast kontrollerad',22]],
+   rows.map(d=>[d.n,DT[d.t],d.tech||'',{drift:'I drift',ned:'Avvecklad',bygg:'Under byggnad',plan:'Planerad'}[d.st],d.o,d.k,d.l,d.se?'SE'+d.se:'',d.mw?Math.round(d.mw*10)/10:'',d.mwt,d.y,d.note||'',d.src.map(x=>x[0]+': '+x[1]).join('\n'),d.vbk?'Vindbrukskollen, sept 2026':CHK_DATE]),stamp(`${rows.length} anläggningar${q||L?' (filtrerat)':''}`)]}
+};
+document.addEventListener('click',async e=>{const b=e.target.closest('[data-xlsx]');if(!b)return;const[name,cols,rows,note]=XP[b.dataset.xlsx]();const old=b.textContent;b.textContent='Skapar fil…';
+  try{await saveBlob(xlsx(name,cols,rows,note),`Energikartan – ${name} ${today}.xlsx`);b.textContent='Klar ✓'}catch(err){b.textContent='Kunde inte skapa filen'}setTimeout(()=>b.textContent=old,1800)});
+
+/* =========================================================
+   SÖK I HELA ENERGIKARTAN
+   ========================================================= */
+(function(){
+  const IDX=[];
+  P0.forEach((p,i)=>IDX.push({c:'Sol, vind och vatten',col:'var(--a-svv)',t:p.n,s:`${TYPES[p.t]} · ${p.b||''} · ${p.k||''}`,q:[p.n,p.b,p.d,p.k,p.l].join(' '),go:()=>{st={t:null,s:null,d:null,sel:i,se:null};apply();go('svv',true);scrollTo('kartan')}}));
+  CO.forEach((c,i)=>IDX.push({c:'Elnätet',col:'var(--a-nat)',t:c.name,s:`${c.cat} · ${c.proj}`,q:[c.name,c.proj,c.lan,c.text].join(' '),go:()=>{nst={...nst,cat:null,sel:c.ll?i:null,lan:null,se:null};nApply();go('nat',true);scrollTo(c.ll?'n-map':'coGrid')}}));
+  NUC.forEach(n=>IDX.push({c:'Kärnkraft',col:'var(--a-karn)',t:n.n,s:`${NST[n.st][1]} · ${n.owner}`,q:[n.n,n.owner,n.d,n.kom,n.l,n.tech].join(' '),go:()=>{kSelect(n.id);go('karn',true);scrollTo('k-map')}}));
+  DI.forEach((d,i)=>{if(d.t==='karn')return;IDX.push({c:'I drift & avvecklat',col:'var(--a-drift)',t:d.n,s:`${DT[d.t]}${d.tech?' ('+d.tech+')':''} · ${d.o||''} · ${d.k||''}`,q:[d.n,d.o,d.k,d.l,d.tech].join(' '),go:()=>{dst={t:null,s:null,se:null,tech:null,sel:i};dApply();go('drift',true);scrollTo('d-kartan')}})});
+  const dlg=$('#searchDlg'),inp=$('#gq'),res=$('#gres');
+  const norm=x=>String(x||'').toLowerCase();
+  function run(){const q=norm(inp.value).trim();if(q.length<2){res.innerHTML='<p class="hint">Skriv minst två tecken – t.ex. ett bolag, en kommun eller ett projekt.</p>';return}
+    const words=q.split(/\s+/);const hits=IDX.filter(x=>{const t=norm(x.q);return words.every(w=>t.includes(w))});
+    const by={};hits.forEach(h=>(by[h.c]=by[h.c]||[]).push(h));
+    res.innerHTML=hits.length?Object.entries(by).map(([c,l])=>`<div class="gs-grp"><div class="eyebrow" style="color:${l[0].col}">${c} <span class="c">${l.length}</span></div>${l.slice(0,40).map(h=>`<button type="button" class="gs-hit" data-gi="${IDX.indexOf(h)}"><b>${esc(h.t)}</b><span>${esc(h.s)}</span></button>`).join('')}${l.length>40?`<p class="hint">+ ${l.length-40} till – förfina sökningen.</p>`:''}</div>`).join(''):'<p class="hint">Inga träffar.</p>'}
+  inp.addEventListener('input',run);
+  res.addEventListener('click',e=>{const b=e.target.closest('.gs-hit');if(!b)return;close();IDX[+b.dataset.gi].go()});
+  const open=()=>{dlg.hidden=false;inp.focus();inp.select();run()},close=()=>{dlg.hidden=true};
+  $('#searchBtn').onclick=open;$('#searchClose').onclick=close;
+  dlg.addEventListener('click',e=>{if(e.target===dlg)close()});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!dlg.hidden)close();if((e.key==='/'||((e.ctrlKey||e.metaKey)&&e.key==='k'))&&dlg.hidden&&!/input|textarea|select/i.test(document.activeElement.tagName)){e.preventDefault();open()}});
 })();
 if(/[?&]export/.test(location.search))window.__ekSeed=()=>JSON.parse(JSON.stringify({svv:P0,co:CO,nuc:NUC.map(n=>{const o={...n};delete o.x;delete o.y;delete o.se;return o}),lager:EX.storage}));
 go((location.hash||'').slice(1),true,true);
