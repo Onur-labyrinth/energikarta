@@ -359,7 +359,19 @@ section,.panel,.mapgrid{scroll-margin-top:84px}
 .chk{font-size:12.5px;color:var(--muted)}
 td .sub.chk{font-size:12px;opacity:.85}
 /* header search + results page */
-.tabsok{appearance:none;border:1px solid var(--head);background:var(--head);color:var(--headtx);border-radius:8px;padding:8px 13px;font:700 14px var(--body);cursor:pointer;white-space:nowrap;flex:none}
+.sug{position:fixed;z-index:70;background:var(--surface);color:var(--ink);border:1px solid var(--line);border-radius:12px;box-shadow:0 14px 40px rgba(34,28,21,.25);overflow:auto;padding:6px;display:flex;flex-direction:column}
+.sug[hidden]{display:none}
+.sug-it{appearance:none;border:0;background:none;text-align:left;display:flex;gap:10px;align-items:flex-start;padding:9px 10px;border-radius:8px;cursor:pointer;font:inherit;color:inherit}
+.sug-it i{flex:none;width:10px;height:10px;border-radius:50%;background:var(--cc);margin-top:6px}
+.sug-it span{display:flex;flex-direction:column;min-width:0}
+.sug-it b{font-size:15.5px;font-weight:700}
+.sug-it small{font-size:13px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sug-it:hover,.sug-it.on{background:var(--soft)}
+.sug mark{background:#F3E2B8;color:inherit;border-radius:2px;padding:0 1px}
+.sug-all{appearance:none;border:0;border-top:1px solid var(--line);background:none;margin-top:4px;padding:11px 10px 8px;text-align:left;font:700 14.5px var(--body);color:var(--bronze);cursor:pointer;border-radius:0 0 8px 8px}
+.sug-all:hover,.sug-all.on{background:var(--gold-soft)}
+.sug-none{padding:10px;font-size:14.5px;color:var(--muted)}
+/* .tabsok (removed) */.tabsok-unused{appearance:none;border:1px solid var(--head);background:var(--head);color:var(--headtx);border-radius:8px;padding:8px 13px;font:700 14px var(--body);cursor:pointer;white-space:nowrap;flex:none}
 .tabsok:hover{background:var(--bronze);border-color:var(--bronze)}
 .hsearch{display:none;align-items:center;gap:8px;border:1px solid rgba(242,237,227,.3);background:rgba(255,255,255,.08);border-radius:999px;padding:0 6px 0 12px;color:var(--headtx);flex:0 1 250px;min-width:150px}
 .hsearch:focus-within{border-color:var(--gold2);background:rgba(255,255,255,.14)}
@@ -2027,8 +2039,8 @@ document.addEventListener('click',async e=>{const b=e.target.closest('[data-xlsx
   const res=$('#sokRes'),inp=$('#sokq'),hq=$('#hsq'),chipsEl=$('#sokChips'),cnt=$('#sokCount'),more=$('#sokMore');
   let fcat=null,shown=30,curQ='',saved=0;
   const hl=(s,words)=>{let o=esc(s);words.forEach(w=>{if(w.length<2)return;const re=new RegExp('('+esc(w).replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+')','ig');o=o.replace(re,'<mark>$1</mark>')});return o};
-  function score(x,q,words){const t=norm(x.t);let s=0;if(t===q)s+=100;else if(t.startsWith(q))s+=60;else if(t.includes(q))s+=40;words.forEach(w=>{if(t.includes(w))s+=10;if(norm(x.m).includes(w))s+=3});return s}
-  function search(q){q=norm(q).trim();if(q.length<2)return[];const words=q.split(/\s+/);return IDX.map((x,i)=>({x,i,s:norm(x.q).includes(q)||words.every(w=>norm(x.q).includes(w))?score(x,q,words):-1})).filter(o=>o.s>=0).sort((a,b)=>b.s-a.s||a.x.t.localeCompare(b.x.t,'sv'))}
+  function score(x,q,words){const t=norm(x.t),m=norm(x.m),ws=w=>new RegExp('(^|[\\s/(·,–-])'+w.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'));let s=0;if(t===q)s+=100;else if(t.startsWith(q))s+=90;else if(ws(q).test(t))s+=70;else if(t.includes(q))s+=25;if(ws(q).test(m))s+=30;words.forEach(w=>{if(ws(w).test(t))s+=10;else if(t.includes(w))s+=4;if(ws(w).test(m))s+=15;else if(m.includes(w))s+=3});return s}
+  function search(q){q=norm(q).trim();if(q.length<2)return[];const words=q.split(/\s+/);return IDX.map((x,i)=>({x,i,s:norm(x.q).includes(q)||words.every(w=>norm(x.q).includes(w))?score(x,q,words):-1})).filter(o=>o.s>=0).sort((a,b)=>b.s-a.s||String(a.x.t||'').localeCompare(String(b.x.t||''),'sv'))}
   function card(o,words){const x=o.x,c=CN[x.c];return `<article class="scard" style="--cc:${c[2]}"><div class="cat"><span class="eyebrow">${esc(x.c)}</span>${x.badge||''}</div>
     <h3><button type="button" data-open="${o.i}">${hl(x.t,words)}</button></h3>
     <div class="meta">${hl(x.m,words)}</div>${x.d?`<p class="snip">${hl(x.d,words)}</p>`:''}<div class="chk">Senast kontrollerad: ${esc(x.chk)}</div>
@@ -2052,11 +2064,36 @@ document.addEventListener('click',async e=>{const b=e.target.closest('[data-xlsx
   window.__sokRestore=()=>{requestAnimationFrame(()=>window.scrollTo({top:saved}))};
   function submit(q,cat){q=String(q||'').trim();SOKQ=q;fcat=null;shown=30;pend=cat||null;curQ=null;go(q?'sok='+encodeURIComponent(q):'sok')}
   /* sökrutorna i flikarna: filtrerar listan direkt, Enter öppnar resultatsidan för den fliken */
-  [['#q','Sol, vind och vatten'],['#nq','Elnätet'],['#dq','I drift & avvecklat']].forEach(([id,cat])=>{const el=$(id);if(!el)return;el.setAttribute('enterkeyhint','search');
-    const h=document.createElement('button');h.type='button';h.className='tabsok';h.innerHTML='Visa som sökresultat <span aria-hidden="true">→</span>';h.hidden=true;el.insertAdjacentElement('afterend',h);
-    const upd=()=>{h.hidden=el.value.trim().length<2};el.addEventListener('input',upd);
-    const goR=()=>{const v=el.value.trim();if(v.length>=2){el.blur();submit(v,cat)}};
-    el.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();goR()}});h.onclick=goR});
+  /* ---------- förslag medan man skriver ---------- */
+  const sug=document.createElement('div');sug.className='sug';sug.id='sugBox';sug.setAttribute('role','listbox');sug.hidden=true;document.body.appendChild(sug);
+  let sEl=null,sAct=-1,sHits=[];
+  function place(){if(!sEl||sug.hidden)return;const r=sEl.getBoundingClientRect(),w=Math.min(Math.max(r.width,360),innerWidth-16);let l=r.left;if(l+w>innerWidth-8)l=innerWidth-8-w;if(l<8)l=8;Object.assign(sug.style,{left:l+'px',top:(r.bottom+6)+'px',width:w+'px',maxHeight:Math.max(160,innerHeight-r.bottom-20)+'px'})}
+  function hideSug(){sug.hidden=true;sAct=-1;if(sEl)sEl.setAttribute('aria-expanded','false')}
+  function showSug(el){sEl=el;const q=el.value.trim();if(q.length<2){hideSug();return}
+    const all=search(q),words=norm(q).split(/\s+/).filter(Boolean);sHits=all.slice(0,7);sAct=-1;
+    sug.innerHTML=(sHits.length?sHits.map((o,k)=>{const c=CN[o.x.c];return `<button type="button" class="sug-it" role="option" data-k="${k}" style="--cc:${c[2]}"><i aria-hidden="true"></i><span><b>${hl(o.x.t,words)}</b><small>${esc(o.x.c)} · ${hl(o.x.m,words)}</small></span></button>`}).join(''):`<div class="sug-none">Inga förslag för ”${esc(q)}”</div>`)
+      +`<button type="button" class="sug-all" data-k="all">Visa alla ${all.length} resultat för ”${esc(q)}” <span aria-hidden="true">→</span></button>`;
+    sug.hidden=false;el.setAttribute('aria-expanded','true');place()}
+  function mark(){[...sug.querySelectorAll('.sug-it,.sug-all')].forEach((b,k)=>b.classList.toggle('on',k===sAct))}
+  function pick(k){const el=sEl,q=el.value.trim();hideSug();el.blur();
+    if(k==='all'||k==null||k<0){submit(q);return}
+    const o=sHits[k];if(!o)return;curQ=q;SOKQ=q;inp.value=q;hq.value=q;saved=0;o.x.go();
+    setTimeout(()=>{if(innerWidth<=880){const pnl=document.querySelector('.view:not([hidden]) .mapgrid .panel');if(pnl)pnl.scrollIntoView({block:'start'})}},60);
+    const sb=$('#sBack');sb.hidden=false;sb.querySelector('b').textContent=q}
+  sug.addEventListener('mousedown',e=>e.preventDefault());
+  sug.addEventListener('click',e=>{const b=e.target.closest('[data-k]');if(!b)return;pick(b.dataset.k==='all'?'all':+b.dataset.k)});
+  function wire(el){if(!el)return;el.setAttribute('enterkeyhint','search');el.setAttribute('autocomplete','off');el.setAttribute('aria-autocomplete','list');el.setAttribute('aria-controls','sugBox');
+    el.addEventListener('input',()=>showSug(el));el.addEventListener('focus',()=>{if(el.value.trim().length>=2)showSug(el)});
+    el.addEventListener('blur',()=>setTimeout(()=>{if(sEl===el&&document.activeElement!==el)hideSug()},120));
+    el.addEventListener('keydown',e=>{const n=sug.querySelectorAll('.sug-it,.sug-all').length;
+      if(e.key==='ArrowDown'&&!sug.hidden){e.preventDefault();sAct=(sAct+1)%n;mark()}
+      else if(e.key==='ArrowUp'&&!sug.hidden){e.preventDefault();sAct=sAct<=0?n-1:sAct-1;mark()}
+      else if(e.key==='Escape'){hideSug()}
+      else if(e.key==='Enter'){e.preventDefault();e.stopPropagation();const q=el.value.trim();if(q.length<2&&el!==inp)return;
+        if(!sug.hidden&&sAct>=0&&sAct<sHits.length)pick(sAct);else{sEl=el;pick('all')}}})}
+  [hq,inp,$('#q'),$('#nq'),$('#dq')].forEach(wire);
+  addEventListener('resize',place);addEventListener('scroll',place,{passive:true});
+
   $('#sokForm').addEventListener('submit',e=>{e.preventDefault();submit(inp.value);inp.blur()});
   $('#hsForm').addEventListener('submit',e=>{e.preventDefault();submit(hq.value);hq.blur()});
   $('#searchBtn').onclick=()=>{submit(curQ);setTimeout(()=>{inp.focus();inp.select()},50)};
