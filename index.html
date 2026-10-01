@@ -358,13 +358,37 @@ section,.panel,.mapgrid{scroll-margin-top:84px}
 .xbtn:hover{background:var(--gold);color:#fff}
 .chk{font-size:12.5px;color:var(--muted)}
 td .sub.chk{font-size:12px;opacity:.85}
-#gq{font-size:17px;padding:12px 14px}
-#gres{display:flex;flex-direction:column;gap:14px;max-height:62vh;overflow:auto}
-.gs-grp{display:flex;flex-direction:column;gap:2px}
-.gs-grp .eyebrow{margin-bottom:6px}.gs-grp .c{color:var(--muted)}
-.gs-hit{appearance:none;border:0;background:none;text-align:left;padding:8px 10px;border-radius:8px;cursor:pointer;display:flex;flex-direction:column;gap:1px;font:inherit;color:inherit}
-.gs-hit:hover,.gs-hit:focus-visible{background:var(--soft)}
-.gs-hit b{font-size:15.5px}.gs-hit span{font-size:13.5px;color:var(--muted)}
+/* header search + results page */
+.hsearch{display:none;align-items:center;gap:8px;border:1px solid rgba(242,237,227,.3);background:rgba(255,255,255,.08);border-radius:999px;padding:0 6px 0 12px;color:var(--headtx);flex:0 1 250px;min-width:150px}
+.hsearch:focus-within{border-color:var(--gold2);background:rgba(255,255,255,.14)}
+.hsearch input{border:0;background:none;color:var(--headtx);padding:8px 4px;font:500 14.5px var(--body);width:100%;min-width:0}
+.hsearch input::placeholder{color:rgba(242,237,227,.6)}
+.hsearch input:focus-visible{outline:none}
+@media (min-width:701px){.hsearch{display:flex}#searchBtn{display:none}}
+.sokform{display:flex;gap:8px;margin-top:18px;max-width:720px}
+.sokform input{font-size:18px;padding:13px 16px;border-radius:10px;border:1.5px solid #B9AD99;flex:1;min-width:0}
+.sokgo{appearance:none;border:0;background:var(--head);color:var(--headtx);border-radius:10px;padding:0 22px;font:700 16px var(--body);cursor:pointer}
+.sokgo:hover{background:var(--bronze)}
+#sokChips .chip[aria-pressed="true"]{background:var(--cc,var(--head));border-color:var(--cc,var(--head))}
+.sokres{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:14px}
+.scard{background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--cc);border-radius:12px;padding:16px 18px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.scard .cat{display:flex;justify-content:space-between;gap:8px;align-items:center;flex-wrap:wrap}
+.scard .cat .eyebrow{color:var(--cc)}
+.scard h3{font:700 19px/1.25 var(--display);margin:0}
+.scard h3 button{appearance:none;border:0;background:none;padding:0;font:inherit;color:inherit;text-align:left;cursor:pointer}
+.scard h3 button:hover{color:var(--cc);text-decoration:underline;text-underline-offset:3px}
+.scard .meta{font-size:14.5px;color:var(--ink2)}
+.scard .snip{font-size:14px;color:var(--muted);margin:0;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.scard mark{background:#F3E2B8;color:inherit;border-radius:2px;padding:0 1px}
+.scard .acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:auto;padding-top:6px}
+.sbtn{appearance:none;display:inline-flex;align-items:center;gap:6px;border:1px solid var(--cc);background:var(--cc);color:#fff;border-radius:8px;padding:8px 13px;font:700 14px var(--body);cursor:pointer;text-decoration:none}
+.sbtn:hover{filter:brightness(.92)}
+.sbtn.ghost{background:var(--surface);color:var(--ink)}
+.sbtn.ghost:hover{background:var(--soft);filter:none}
+.sokgrp{grid-column:1/-1;display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 10px;margin:10px 0 0;font:700 17px var(--display)}
+.sokgrp:first-child{margin-top:0}.sokgrp small{font:400 13px var(--mono);color:var(--muted)}
+.sokempty{grid-column:1/-1;background:var(--surface);border:1px dashed var(--line);border-radius:12px;padding:22px;display:flex;flex-direction:column;gap:10px}
+@media (max-width:700px){.sokres{grid-template-columns:1fr}.sokform input{font-size:16px}}
 @media (max-width:700px){#searchBtn span,#dataBtn span{display:none}}
 /* data editor */
 .dbdlg{position:fixed;inset:0;z-index:60;background:rgba(34,28,21,.55);display:flex;align-items:flex-start;justify-content:center;padding:40px 16px;overflow:auto}
@@ -486,6 +510,7 @@ td .sub.chk{font-size:12px;opacity:.85}
     <button class="mtab" role="tab" data-v="karn" aria-selected="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="1.6" fill="currentColor"/><ellipse cx="12" cy="12" rx="10" ry="4"/><ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(120 12 12)"/></svg><span class="lf">Kärnkraft</span><span class="ls">Kärnkraft</span></button>
     <button class="mtab" role="tab" data-v="drift" aria-selected="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 11v11M9 22h6"/><path d="M12 10 11 2.5c1.6 0 2.4 1.2 2 3L12 10z"/><path d="M12.9 10.6l6.8 3.4c-.8 1.4-2.2 1.5-3.6.5L12.9 10.6z"/><path d="M11.1 10.6l-6.8 3.4c.8 1.4 2.2 1.5 3.6.5l3.2-3.9z"/><circle cx="12" cy="10.5" r="1.2"/></svg><span class="lf">I drift &amp; avvecklat</span><span class="ls">I drift</span></button>
   </nav>
+  <form class="hsearch" id="hsForm" role="search" action="#" autocomplete="off"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input type="search" id="hsq" placeholder="Sök bolag, projekt, kommun …" aria-label="Sök i hela Energikartan" enterkeyhint="search"></form>
   <button class="guidebtn" type="button" id="searchBtn" aria-label="Sök i hela Energikartan"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span>Sök</span></button>
   <button class="guidebtn" type="button" id="dataBtn" hidden aria-label="Redigera data"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v14c0 1.7 3.6 3 8 3s8-1.3 8-3V5M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/></svg><span>Data</span></button>
   <button class="guidebtn" type="button" id="guideBtn" aria-label="Starta introduktionsguiden"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 2.5-3 4.5"/><circle cx="12" cy="17.5" r=".6" fill="currentColor"/></svg><span>Guide</span></button>
@@ -829,6 +854,18 @@ td .sub.chk{font-size:12px;opacity:.85}
   </div>
 </div>
 
+<!-- ================= SÖKRESULTAT ================= -->
+<div class="view" id="v-sok" hidden>
+  <div class="hero"><div class="wrap" style="padding-bottom:20px">
+    <div class="eyebrow" style="color:var(--bronze)">Sök i hela Energikartan</div>
+    <h1 style="margin-top:10px" id="sokH">Sökresultat</h1>
+    <form class="sokform" id="sokForm" role="search" action="#" autocomplete="off"><input type="search" id="sokq" placeholder="T.ex. Vattenfall, Piteå, Blykalla, batteri …" aria-label="Sökord" enterkeyhint="search"><button type="submit" class="sokgo">Sök</button></form>
+    <p class="hint" id="sokCount" aria-live="polite" style="margin-top:10px"></p>
+    <div class="chips" id="sokChips" role="group" aria-label="Filtrera på flik" style="margin-top:12px"></div>
+  </div></div>
+  <div class="wrap" style="padding-top:22px"><div id="sokRes" class="sokres"></div><div id="sokMore" style="text-align:center;margin-top:18px"></div></div>
+</div>
+
 <!-- ================= I DRIFT & AVVECKLAT ================= -->
 <div class="view" id="v-drift" hidden>
   <div class="hero"><div class="wrap">
@@ -902,7 +939,7 @@ td .sub.chk{font-size:12px;opacity:.85}
   </div>
 </div>
 
-<div class="dbdlg" id="searchDlg" hidden role="dialog" aria-modal="true" aria-label="Sök i Energikartan"><div class="dbbox"><div class="dbhead"><h2>Sök i hela Energikartan</h2><button class="tbtn" type="button" id="searchClose">Stäng</button></div><input type="search" id="gq" placeholder="T.ex. Vattenfall, Piteå, Blykalla, batteri …" aria-label="Sökord"><div id="gres"></div></div></div>
+
 <div class="dbdlg" id="dataDlg" hidden role="dialog" aria-modal="true" aria-label="Redigera data"><div class="dbbox"><div class="dbhead"><h2>Redigera data</h2><button class="tbtn" type="button" id="dataClose">Stäng</button></div><p class="hint">Ändringar sparas i sidans delade databas och syns för alla som öppnar länken. Den nedladdade filen visar alltid den version som fanns när den sparades.</p><div id="dataBody"></div></div></div>
 <div class="sback" id="sBack" hidden><button type="button" data-sb="back"><span aria-hidden="true">←</span> Tillbaka till sökresultaten <small>· <b></b></small></button><button type="button" data-sb="x" aria-label="Dölj">×</button></div>
 <div class="tt" id="tt" hidden></div>
@@ -1036,14 +1073,18 @@ const GEXPL='<span class="g-expl"><b>Så läser du tidslinjen:</b> Mörk stapel 
 const gl=(c,t,dot)=>`<span><i style="background:${c}${dot?';width:10px;height:10px;border-radius:50%':''}"></i>${t}</span>`;
 
 /* ---------------- tabs ---------------- */
-const VIEWS=['ovr','svv','nat','karn','drift'];
+const VIEWS=['ovr','svv','nat','karn','drift','sok'];
 const mtabs=[...document.querySelectorAll('.mtab')];
-function go(v,noScroll,fromPop){if(!VIEWS.includes(v))v='ovr';const prev=document.body.dataset.tab;document.body.dataset.tab=v;
+let SOKQ='';
+function go(v,noScroll,fromPop){v=String(v||'');if(v.startsWith('sok')){const m=v.match(/^sok[=/](.*)$/);if(m)try{SOKQ=decodeURIComponent(m[1].replace(/\+/g,' '))}catch(e){SOKQ=m[1]}v='sok'}
+  if(!VIEWS.includes(v))v='ovr';const prev=document.body.dataset.tab,prevQ=document.body.dataset.q;document.body.dataset.tab=v;
+  const sbk=$('#sBack');if(sbk)sbk.hidden=true;if(v==='sok'&&window.__sokRender)window.__sokRender(SOKQ);
+  const hash='#'+v+(v==='sok'&&SOKQ?'='+encodeURIComponent(SOKQ):'');document.body.dataset.q=v==='sok'?SOKQ:'';
   mtabs.forEach(b=>b.setAttribute('aria-selected',String(b.dataset.v===v)));
   VIEWS.forEach(k=>$('#v-'+k).hidden=k!==v);
-  const mb=$('#menuBtn'),src=mtabs.find(b=>b.dataset.v===v);if(mb&&src){mb.dataset.v=v;mb.querySelector('.mb-cur').innerHTML=src.querySelector('svg').outerHTML+'<span>'+src.querySelector('.lf').innerHTML+'</span>'}
+  const mb=$('#menuBtn'),src=mtabs.find(b=>b.dataset.v===v);if(mb&&src){mb.dataset.v=v;mb.querySelector('.mb-cur').innerHTML=src.querySelector('svg').outerHTML+'<span>'+src.querySelector('.lf').innerHTML+'</span>'}else if(mb&&v==='sok'){mb.dataset.v=v;mb.querySelector('.mb-cur').innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span>Sökresultat</span>'}
   document.querySelectorAll('#menuPanel [data-v]').forEach(b=>b.setAttribute('aria-current',String(b.dataset.v===v)));closeMenu();
-  try{if(!fromPop&&prev&&prev!==v)history.pushState({v},'','#'+v);else history.replaceState({v},'','#'+v)}catch(e){}
+  try{if(!fromPop&&prev&&(prev!==v||(v==='sok'&&prevQ!==SOKQ)))history.pushState({v,q:SOKQ},'',hash);else history.replaceState({v,q:SOKQ},'',hash)}catch(e){}
   hideTT();if(!noScroll)window.scrollTo({top:0});}
 const menuP=$('#menuPanel'),menuB=$('#menuBtn');
 function closeMenu(){if(menuP){menuP.hidden=true;menuB.setAttribute('aria-expanded','false')}}
@@ -1054,7 +1095,7 @@ menuP.onclick=e=>{const b=e.target.closest('[data-v]');if(b)go(b.dataset.v)};
 document.addEventListener('click',e=>{if(!menuP.hidden&&!e.target.closest('#menuPanel,#menuBtn'))closeMenu()});
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeMenu()});
 mtabs.forEach(b=>b.onclick=()=>go(b.dataset.v));
-addEventListener('popstate',e=>go((e.state&&e.state.v)||(location.hash||'').slice(1),false,true));
+addEventListener('popstate',e=>{const s=e.state;if(s&&s.v==='sok')SOKQ=s.q||'';go(s&&s.v?s.v:(location.hash||'').slice(1),!!(s&&s.v==='sok'),true);if(s&&s.v==='sok'&&window.__sokRestore)window.__sokRestore()});
 $('#brand').addEventListener('click',e=>{e.preventDefault();try{history.replaceState(null,'',location.pathname+location.search)}catch(_){}location.reload()});
 document.addEventListener('click',e=>{const b=e.target.closest('[data-go]');if(b){e.preventDefault();go(b.dataset.go)}});
 const backTab=()=>history.back();
@@ -1710,7 +1751,7 @@ const navSel=()=>getComputedStyle($('#mtabs')).display==='none'?'#menuBtn':'#mta
 const TOUR=[
  {v:'ovr',sel:null,h:'Välkommen till Energikartan',p:'En snabb rundtur på ungefär en minut. Du kan hoppa över när som helst och starta guiden igen med frågetecknet uppe till höger.'},
  {v:'ovr',sel:navSel,h:'Fem flikar',p:'Översikt, Sol, vind och vatten, Elnätet, Kärnkraft samt I drift och avvecklat – varje flik har en egen färg och symbol. På mindre skärmar öppnar du flikarna i menyn, på mobilen ligger de längst ned.'},
- {v:'ovr',sel:'#searchBtn',h:'Sök i allt',p:'Sök efter ett bolag, en kommun eller ett projekt i alla flikar på en gång (genvägen är tangenten /). Enter öppnar första träffen och visar den på kartan. Knappen "Tillbaka till sökresultaten" tar dig tillbaka.'},
+ {v:'ovr',sel:()=>getComputedStyle($('#hsForm')).display==='none'?'#searchBtn':'#hsForm',h:'Sök i allt',p:'Skriv ett bolag, en kommun eller ett projekt och tryck Enter (genvägen är tangenten /). Du kommer till en resultatsida med träffar från alla flikar, sorterade per flik. Varje träff har knappen "Visa på kartan" som öppnar rätt sida, och "Källa". Med "Tillbaka till sökresultaten" kommer du tillbaka till listan.'},
  {v:'ovr',sel:'#o-tri',h:'Tre kartor sida vid sida',p:'Peka på ett län i valfri karta. Länet markeras i alla tre och siffrorna visas under kartorna. Tryck för att låsa valet.'},
  {v:'ovr',sel:'#o-se',h:'Elområden SE1–SE4',p:'Välj ett elområde här eller tryck på SE-etiketten i kartan. De streckade linjerna visar ungefär var gränserna går.'},
  {v:'ovr',sel:'#big-chart',h:'Den stora tidslinjen',p:'Elproduktion och elanvändning sedan 2005 och Svenska kraftnäts scenarier fram till 2050. Peka på en punkt för värde och källa.'},
@@ -1972,27 +2013,55 @@ document.addEventListener('click',async e=>{const b=e.target.closest('[data-xlsx
    ========================================================= */
 (function(){
   const IDX=[];
-  P0.forEach((p,i)=>IDX.push({c:'Sol, vind och vatten',col:'var(--a-svv)',t:p.n,s:`${TYPES[p.t]} · ${p.b||''} · ${p.k||''}`,q:[p.n,p.b,p.d,p.k,p.l].join(' '),go:()=>{st={t:null,s:null,d:null,sel:i,se:null};apply();go('svv',true);scrollTo('kartan')}}));
-  CO.forEach((c,i)=>IDX.push({c:'Elnätet',col:'var(--a-nat)',t:c.name,s:`${c.cat} · ${c.proj}`,q:[c.name,c.proj,c.lan,c.text].join(' '),go:()=>{nst={...nst,cat:null,sel:c.ll?i:null,lan:null,se:null};nApply();go('nat',true);scrollTo(c.ll?'n-map':'coGrid')}}));
-  NUC.forEach(n=>IDX.push({c:'Kärnkraft',col:'var(--a-karn)',t:n.n,s:`${NST[n.st][1]} · ${n.owner}`,q:[n.n,n.owner,n.d,n.kom,n.l,n.tech].join(' '),go:()=>{kSelect(n.id);go('karn',true);scrollTo('k-map')}}));
-  DI.forEach((d,i)=>{if(d.t==='karn')return;IDX.push({c:'I drift & avvecklat',col:'var(--a-drift)',t:d.n,s:`${DT[d.t]}${d.tech?' ('+d.tech+')':''} · ${d.o||''} · ${d.k||''}`,q:[d.n,d.o,d.k,d.l,d.tech].join(' '),go:()=>{dst={t:null,s:null,se:null,tech:null,sel:i};dApply();go('drift',true);scrollTo('d-kartan')}})});
-  const dlg=$('#searchDlg'),inp=$('#gq'),res=$('#gres');
+  const J=(...a)=>a.filter(Boolean).join(' · ');
+  const DST={drift:['ok','I drift'],ned:['other','Avvecklad'],bygg:['plan2','Under byggnad'],plan:['plan','Planerad']};
+  P0.forEach((p,i)=>IDX.push({c:'Sol, vind och vatten',t:p.n,m:J(TYPES[p.t],p.b,p.k&&p.l?p.k+', '+p.l:(p.k||p.l),size2(p)),d:p.why||p.desc||'',badge:badge(p.s),chk:p.t==='karn'?CHK_DATE:chkSvv(p),src:p.w||p.src,btn:'Visa på kartan',q:[p.n,p.b,p.d,p.k,p.l,TYPES[p.t],p.why,p.desc].join(' '),go:()=>{st={t:null,s:null,d:null,sel:i,se:null};apply();go('svv',true);scrollTo('kartan')}}));
+  CO.forEach((c,i)=>IDX.push({c:'Elnätet',t:c.name,m:J(c.cat,c.proj,c.lan,c.mw),d:c.text,badge:cbadge(c.status),chk:c.chk||CHK_DATE,src:c.links[0]&&c.links[0][1],btn:c.ll?'Visa på kartan':'Visa i Elnätet',q:[c.name,c.cat,c.proj,c.lan,c.text].join(' '),go:()=>{nst={...nst,cat:null,sel:c.ll?i:null,lan:null,se:null};nApply();go('nat',true);scrollTo(c.ll?'n-map':'coGrid')}}));
+  NUC.forEach(n=>IDX.push({c:'Kärnkraft',t:n.n,m:J(n.owner,n.kom&&n.l?n.kom+', '+n.l:(n.kom||n.l),n.mwt,n.dates),d:n.desc,badge:nbadge(n.st),chk:n.sec?'1 okt 2026 (sekundärkälla)':CHK_DATE,src:n.src[0]&&n.src[0][1],btn:'Visa på kartan',q:[n.n,n.owner,n.d,n.kom,n.l,n.tech,'kärnkraft',n.desc].join(' '),go:()=>{kSelect(n.id);go('karn',true);scrollTo('k-map')}}));
+  DI.forEach((d,i)=>{if(d.t==='karn')return;const b=DST[d.st]||DST.drift;IDX.push({c:'I drift & avvecklat',t:d.n,m:J(DT[d.t]+(d.tech?' ('+d.tech+')':''),d.o,d.k&&d.l?d.k+', '+d.l:(d.k||d.l),d.mwt||(d.mw?fmt(Math.round(d.mw*10)/10)+' MW':''),d.y),d:d.note||'',badge:`<span class="badge ${b[0]}"><i></i>${b[1]}</span>`,chk:d.vbk?'Vindbrukskollen, sept 2026':CHK_DATE,src:d.src&&d.src[0]&&d.src[0][1],btn:'Visa på kartan',q:[d.n,d.o,d.k,d.l,d.tech,DT[d.t],d.note].join(' '),go:()=>{dst={t:null,s:null,se:null,tech:null,sel:i};dApply();go('drift',true);scrollTo('d-kartan')}})});
   const norm=x=>String(x||'').toLowerCase();
-  function run(){const q=norm(inp.value).trim();if(q.length<2){res.innerHTML='<p class="hint">Skriv minst två tecken – t.ex. ett bolag, en kommun eller ett projekt.</p>';return}
-    const words=q.split(/\s+/);const hits=IDX.filter(x=>{const t=norm(x.q);return words.every(w=>t.includes(w))});
-    const by={};hits.forEach(h=>(by[h.c]=by[h.c]||[]).push(h));
-    res.innerHTML=hits.length?Object.entries(by).map(([c,l])=>`<div class="gs-grp"><div class="eyebrow" style="color:${l[0].col}">${c} <span class="c">${l.length}</span></div>${l.slice(0,40).map(h=>`<button type="button" class="gs-hit" data-gi="${IDX.indexOf(h)}"><b>${esc(h.t)}</b><span>${esc(h.s)}</span></button>`).join('')}${l.length>40?`<p class="hint">+ ${l.length-40} till – förfina sökningen.</p>`:''}</div>`).join(''):'<p class="hint">Inga träffar.</p>'}
-  inp.addEventListener('input',run);
-  inp.addEventListener('keydown',e=>{const hits=[...res.querySelectorAll('.gs-hit')];if(e.key==='Enter'){e.preventDefault();if(hits[0])hits[0].click()}else if(e.key==='ArrowDown'&&hits[0]){e.preventDefault();hits[0].focus()}});
-  res.addEventListener('keydown',e=>{const hits=[...res.querySelectorAll('.gs-hit')],i=hits.indexOf(document.activeElement);if(e.key==='ArrowDown'&&i<hits.length-1){e.preventDefault();hits[i+1].focus()}if(e.key==='ArrowUp'){e.preventDefault();(i>0?hits[i-1]:inp).focus()}});
-  const sb=$('#sBack');let from=null;
-  sb.querySelector('[data-sb="back"]').onclick=()=>{sb.hidden=true;open()};
+  const CATS=[['svv','Sol, vind och vatten','var(--a-svv)'],['nat','Elnätet','var(--a-nat)'],['karn','Kärnkraft','var(--a-karn)'],['drift','I drift & avvecklat','var(--a-drift)']];
+  const CN=Object.fromEntries(CATS.map(c=>[c[1],c]));
+  const res=$('#sokRes'),inp=$('#sokq'),hq=$('#hsq'),chipsEl=$('#sokChips'),cnt=$('#sokCount'),more=$('#sokMore');
+  let fcat=null,shown=30,curQ='',saved=0;
+  const hl=(s,words)=>{let o=esc(s);words.forEach(w=>{if(w.length<2)return;const re=new RegExp('('+esc(w).replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+')','ig');o=o.replace(re,'<mark>$1</mark>')});return o};
+  function score(x,q,words){const t=norm(x.t);let s=0;if(t===q)s+=100;else if(t.startsWith(q))s+=60;else if(t.includes(q))s+=40;words.forEach(w=>{if(t.includes(w))s+=10;if(norm(x.m).includes(w))s+=3});return s}
+  function search(q){q=norm(q).trim();if(q.length<2)return[];const words=q.split(/\s+/);return IDX.map((x,i)=>({x,i,s:norm(x.q).includes(q)||words.every(w=>norm(x.q).includes(w))?score(x,q,words):-1})).filter(o=>o.s>=0).sort((a,b)=>b.s-a.s||a.x.t.localeCompare(b.x.t,'sv'))}
+  function card(o,words){const x=o.x,c=CN[x.c];return `<article class="scard" style="--cc:${c[2]}"><div class="cat"><span class="eyebrow">${esc(x.c)}</span>${x.badge||''}</div>
+    <h3><button type="button" data-open="${o.i}">${hl(x.t,words)}</button></h3>
+    <div class="meta">${hl(x.m,words)}</div>${x.d?`<p class="snip">${hl(x.d,words)}</p>`:''}<div class="chk">Senast kontrollerad: ${esc(x.chk)}</div>
+    <div class="acts"><button type="button" class="sbtn" data-open="${o.i}">${x.btn} <span aria-hidden="true">→</span></button>${x.src?`<a class="sbtn ghost" href="${esc(x.src)}" target="_blank" rel="noopener">Källa ↗</a>`:''}</div></article>`}
+  function render(q){curQ=q;inp.value=q;hq.value=q;const words=norm(q).trim().split(/\s+/).filter(Boolean);
+    const all=search(q);$('#sokH').textContent=q.trim().length>=2?`Sökresultat för ”${q.trim()}”`:'Sök i Energikartan';
+    document.title=(q.trim()?q.trim()+' – ':'')+'Sök – Energikartan';
+    if(q.trim().length<2){cnt.textContent='';chipsEl.innerHTML='';more.innerHTML='';
+      res.innerHTML=`<div class="sokempty"><b>Vad letar du efter?</b><span class="hint">Sök på ett bolag, ett projekt, en kommun, ett län eller en teknik – resultaten hämtas från alla flikar.</span><div class="chips">${['Vattenfall','Piteå','Blykalla','batteri','havsbaserad','Ringhals','Svenska kraftnät'].map(e=>`<button type="button" class="chip" data-ex="${e}">${e}</button>`).join('')}</div></div>`;return}
+    const by={};all.forEach(o=>(by[o.x.c]=by[o.x.c]||[]).push(o));
+    if(fcat&&!by[fcat])fcat=null;
+    chipsEl.innerHTML=`<button type="button" class="chip" data-cat="" aria-pressed="${!fcat}">Alla <small>${all.length}</small></button>`+CATS.filter(c=>by[c[1]]).map(c=>`<button type="button" class="chip" data-cat="${c[1]}" style="--cc:${c[2]}" aria-pressed="${fcat===c[1]}">${c[1]} <small>${by[c[1]].length}</small></button>`).join('');
+    cnt.textContent=all.length?`${all.length} träff${all.length===1?'':'ar'} i ${Object.keys(by).length} flik${Object.keys(by).length===1?'':'ar'}. Klicka på en träff för att öppna den på sin sida.`:'';
+    if(!all.length){more.innerHTML='';chipsEl.innerHTML='';res.innerHTML=`<div class="sokempty"><b>Inga träffar för ”${esc(q.trim())}”</b><span class="hint">Kontrollera stavningen eller prova ett kortare ord – t.ex. bara bolagets eller kommunens namn.</span></div>`;return}
+    const list=fcat?by[fcat]:all;
+    if(fcat){res.innerHTML=list.slice(0,shown).map(o=>card(o,words)).join('')}
+    else{let n=0;res.innerHTML=CATS.filter(c=>by[c[1]]).map(c=>{const l=by[c[1]],take=Math.max(0,Math.min(l.length,shown<=30?6:shown));n+=take;return `<h2 class="sokgrp" style="color:${c[2]}">${c[1]} <small>${l.length} träff${l.length===1?'':'ar'}</small>${l.length>take?`<button type="button" class="linkbtn" data-cat="${c[1]}" style="margin-left:auto;font-size:14px">Visa alla ${l.length} →</button>`:''}</h2>`+l.slice(0,take).map(o=>card(o,words)).join('')}).join('')}
+    more.innerHTML=fcat&&list.length>shown?`<button type="button" class="sbtn ghost" style="--cc:var(--line)" id="sokMoreB">Visa fler (${list.length-shown} till)</button>`:''}
+  window.__sokRender=q=>{if(q!==curQ){fcat=null;shown=30}render(q)};
+  window.__sokRestore=()=>{requestAnimationFrame(()=>window.scrollTo({top:saved}))};
+  function submit(q){q=String(q||'').trim();SOKQ=q;fcat=null;shown=30;go(q?'sok='+encodeURIComponent(q):'sok')}
+  $('#sokForm').addEventListener('submit',e=>{e.preventDefault();submit(inp.value);inp.blur()});
+  $('#hsForm').addEventListener('submit',e=>{e.preventDefault();submit(hq.value);hq.blur()});
+  $('#searchBtn').onclick=()=>{submit(curQ);setTimeout(()=>{inp.focus();inp.select()},50)};
+  chipsEl.addEventListener('click',e=>{const b=e.target.closest('[data-cat]');if(!b)return;fcat=b.dataset.cat||null;shown=30;render(curQ)});
+  more.addEventListener('click',e=>{if(e.target.closest('#sokMoreB')){shown+=30;render(curQ)}});
+  res.addEventListener('click',e=>{const ex=e.target.closest('[data-ex]');if(ex){submit(ex.dataset.ex);return}
+    const c=e.target.closest('[data-cat]');if(c){fcat=c.dataset.cat;shown=30;render(curQ);$('#sokChips').scrollIntoView({block:'start'});return}
+    const b=e.target.closest('[data-open]');if(!b)return;saved=window.scrollY;const x=IDX[+b.dataset.open];x.go();
+    setTimeout(()=>{if(innerWidth<=880){const pnl=document.querySelector('.view:not([hidden]) .mapgrid .panel');if(pnl)pnl.scrollIntoView({block:'start'})}},60);
+    const sb=$('#sBack');sb.hidden=false;sb.querySelector('b').textContent=curQ});
+  const sb=$('#sBack');
+  sb.querySelector('[data-sb="back"]').onclick=()=>{sb.hidden=true;if(history.state&&history.state.v!=='sok'){try{history.back();return}catch(e){}}submit(curQ)};
   sb.querySelector('[data-sb="x"]').onclick=()=>{sb.hidden=true};
-  res.addEventListener('click',e=>{const b=e.target.closest('.gs-hit');if(!b)return;close();IDX[+b.dataset.gi].go();setTimeout(()=>{if(innerWidth<=880){const pnl=document.querySelector('.view:not([hidden]) .mapgrid .panel');if(pnl)pnl.scrollIntoView({block:'start'})}},60);$('#sBack').hidden=false;$('#sBack b').textContent=IDX[+b.dataset.gi].t});
-  const open=()=>{dlg.hidden=false;$('#sBack').hidden=true;inp.focus();inp.select();run()},close=()=>{dlg.hidden=true};
-  $('#searchBtn').onclick=open;$('#searchClose').onclick=close;
-  dlg.addEventListener('click',e=>{if(e.target===dlg)close()});
-  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!dlg.hidden)close();if((e.key==='/'||((e.ctrlKey||e.metaKey)&&e.key==='k'))&&dlg.hidden&&!/input|textarea|select/i.test(document.activeElement.tagName)){e.preventDefault();open()}});
+  document.addEventListener('keydown',e=>{if((e.key==='/'||((e.ctrlKey||e.metaKey)&&e.key==='k'))&&!/input|textarea|select/i.test(document.activeElement.tagName)){e.preventDefault();const t=getComputedStyle($('#hsForm')).display!=='none'?hq:null;if(t){t.focus();t.select()}else{submit(curQ);setTimeout(()=>inp.focus(),50)}}});
 })();
 if(/[?&]export/.test(location.search))window.__ekSeed=()=>JSON.parse(JSON.stringify({svv:P0,co:CO,nuc:NUC.map(n=>{const o={...n};delete o.x;delete o.y;delete o.se;return o}),lager:EX.storage}));
 go((location.hash||'').slice(1),true,true);
