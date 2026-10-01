@@ -359,6 +359,8 @@ section,.panel,.mapgrid{scroll-margin-top:84px}
 .chk{font-size:12.5px;color:var(--muted)}
 td .sub.chk{font-size:12px;opacity:.85}
 /* header search + results page */
+.tabsok{appearance:none;border:1px solid var(--head);background:var(--head);color:var(--headtx);border-radius:8px;padding:8px 13px;font:700 14px var(--body);cursor:pointer;white-space:nowrap;flex:none}
+.tabsok:hover{background:var(--bronze);border-color:var(--bronze)}
 .hsearch{display:none;align-items:center;gap:8px;border:1px solid rgba(242,237,227,.3);background:rgba(255,255,255,.08);border-radius:999px;padding:0 6px 0 12px;color:var(--headtx);flex:0 1 250px;min-width:150px}
 .hsearch:focus-within{border-color:var(--gold2);background:rgba(255,255,255,.14)}
 .hsearch input{border:0;background:none;color:var(--headtx);padding:8px 4px;font:500 14.5px var(--body);width:100%;min-width:0}
@@ -2045,9 +2047,16 @@ document.addEventListener('click',async e=>{const b=e.target.closest('[data-xlsx
     if(fcat){res.innerHTML=list.slice(0,shown).map(o=>card(o,words)).join('')}
     else{let n=0;res.innerHTML=CATS.filter(c=>by[c[1]]).map(c=>{const l=by[c[1]],take=Math.max(0,Math.min(l.length,shown<=30?6:shown));n+=take;return `<h2 class="sokgrp" style="color:${c[2]}">${c[1]} <small>${l.length} träff${l.length===1?'':'ar'}</small>${l.length>take?`<button type="button" class="linkbtn" data-cat="${c[1]}" style="margin-left:auto;font-size:14px">Visa alla ${l.length} →</button>`:''}</h2>`+l.slice(0,take).map(o=>card(o,words)).join('')}).join('')}
     more.innerHTML=fcat&&list.length>shown?`<button type="button" class="sbtn ghost" style="--cc:var(--line)" id="sokMoreB">Visa fler (${list.length-shown} till)</button>`:''}
-  window.__sokRender=q=>{if(q!==curQ){fcat=null;shown=30}render(q)};
+  let pend;
+  window.__sokRender=q=>{if(q!==curQ){fcat=null;shown=30}if(pend!==undefined){fcat=pend;shown=30;pend=undefined}render(q)};
   window.__sokRestore=()=>{requestAnimationFrame(()=>window.scrollTo({top:saved}))};
-  function submit(q){q=String(q||'').trim();SOKQ=q;fcat=null;shown=30;go(q?'sok='+encodeURIComponent(q):'sok')}
+  function submit(q,cat){q=String(q||'').trim();SOKQ=q;fcat=null;shown=30;pend=cat||null;curQ=null;go(q?'sok='+encodeURIComponent(q):'sok')}
+  /* sökrutorna i flikarna: filtrerar listan direkt, Enter öppnar resultatsidan för den fliken */
+  [['#q','Sol, vind och vatten'],['#nq','Elnätet'],['#dq','I drift & avvecklat']].forEach(([id,cat])=>{const el=$(id);if(!el)return;el.setAttribute('enterkeyhint','search');
+    const h=document.createElement('button');h.type='button';h.className='tabsok';h.innerHTML='Visa som sökresultat <span aria-hidden="true">→</span>';h.hidden=true;el.insertAdjacentElement('afterend',h);
+    const upd=()=>{h.hidden=el.value.trim().length<2};el.addEventListener('input',upd);
+    const goR=()=>{const v=el.value.trim();if(v.length>=2){el.blur();submit(v,cat)}};
+    el.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();goR()}});h.onclick=goR});
   $('#sokForm').addEventListener('submit',e=>{e.preventDefault();submit(inp.value);inp.blur()});
   $('#hsForm').addEventListener('submit',e=>{e.preventDefault();submit(hq.value);hq.blur()});
   $('#searchBtn').onclick=()=>{submit(curQ);setTimeout(()=>{inp.focus();inp.select()},50)};
