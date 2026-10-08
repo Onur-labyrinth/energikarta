@@ -2604,7 +2604,7 @@ function energyOpen(k){const[a,b]=k.split(':');
   else{dst={t:null,s:null,se:null,tech:null,sel:+b};dApply();go('drift',true);scrollTo('d-kartan')}}
 
 function ledHTML(led,gov){if(!led)return '';const G=gov?new Set(gov.map(a=>a.toLowerCase())):null;
-  return led.map(([a,names,tom])=>`<details class="kp-party"><summary>${ppill(a)}<b>${names.length+(tom||0)}</b>${G&&G.has(a.toLowerCase())?'<span class="kp-in">i styret</span>':''}<span class="kp-first">${esc(names.slice(0,2).join(', '))}${names.length>2?' m.fl.':''}</span></summary><ul class="kp-names">${names.map((n,i)=>`<li><span class="kp-av" style="--pc:${pcol(a)}">${esc(n.split(' ').filter(Boolean).map(x=>x[0]).slice(0,2).join(''))}</span>${esc(n)}${i===0?' <small>första namn</small>':''}</li>`).join('')}${tom?`<li><small>${tom} ${tom===1?'tom stol':'tomma stolar'} – partiet fick fler mandat än kandidater</small></li>`:''}</ul></details>`).join('')}
+  return led.map(([a,names,tom])=>`<details class="kp-party"><summary>${ppill(a)}<b>${names.length+(tom||0)}</b>${G&&G.has(a.toLowerCase())?'<span class="kp-in">i styret</span>':''}<span class="kp-first">${esc(names.slice(0,2).join(', '))}${names.length>2?' m.fl.':''}</span></summary><ul class="kp-names">${names.map((n,i)=>`<li><span class="kp-av" style="--pc:${pcol(a)}">${esc(n.split(' ').filter(Boolean).map(x=>x[0]).slice(0,2).join(''))}</span>${esc(n)}</li>`).join('')}${tom?`<li><small>${tom} ${tom===1?'tom stol':'tomma stolar'} – partiet fick fler mandat än kandidater</small></li>`:''}</ul></details>`).join('')}
 
 function pPanel(){const box=$('#p-panel');
   if(pst.lan){const l=pst.lan,L=POLD.lan[l],rf=L.rf,isG=l==='09';
