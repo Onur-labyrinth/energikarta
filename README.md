@@ -1,3 +1,3 @@
 # energikarta
-The Labyrinth energitkarta
+The Labyrinth energikarta
 
